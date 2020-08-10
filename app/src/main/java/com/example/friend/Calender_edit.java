@@ -10,7 +10,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 
-//2-1 일정 클릭해서 상세정보 볼 수 있고 수정할 수 있는 창
+//2-1 일정 클릭해서 상세정보 볼 수 있고 수정할 수 있
 public class Calender_edit extends AppCompatActivity {
     private EditText edit_name, edit_memo;
     private Button btn_edit;
