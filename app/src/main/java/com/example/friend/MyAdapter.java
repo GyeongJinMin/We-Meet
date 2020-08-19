@@ -63,7 +63,7 @@ public class MyAdapter extends RecyclerView.Adapter {
     private static final int MY_PROFILE = 1;
     private static final int FRIEND_HEADER = 2;
 
-    MyAdapter(List<Profile> profiles, Context context) {
+    MyAdapter(List<Profile> profiles, MainActivity context) {
         mProfiles = profiles;
         this.context = context;
 
