@@ -2,6 +2,7 @@ package com.example.friend;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -34,11 +35,12 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
-public class ScheduleMainActivity extends AppCompatActivity {
+public class ScheduleMainActivity extends Fragment {
     private ActivityScheduleMainBinding activityScheduleMainBinding;
     private ArrayList<Schedule> schedules;
     private ScheduleAdapter scheduleAdapter;
 
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

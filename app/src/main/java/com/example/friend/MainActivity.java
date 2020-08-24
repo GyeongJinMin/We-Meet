@@ -2,9 +2,13 @@ package com.example.friend;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.friend.databinding.ActivityMainBinding;
@@ -13,18 +17,18 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends Fragment {
 
     ArrayList<Profile> mProfiles = new ArrayList<>();
     ActivityMainBinding binding;
 
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
-
         mShowProfile();
+
+        return binding.getRoot();
     }
 
     public void mShowProfile() { // 프로필 보여주기
@@ -59,9 +63,9 @@ public class MainActivity extends AppCompatActivity {
         // <친구> 화면에 보여줄 본인, 친구목록
 
         // 어댑터 할당
-        MyAdapter adapter = new MyAdapter(mProfiles, this);
+        MyAdapter adapter = new MyAdapter(mProfiles, getContext());
         binding.rvProfile.setAdapter(adapter);
-        binding.rvProfile.setLayoutManager(new LinearLayoutManager(this));
+        binding.rvProfile.setLayoutManager(new LinearLayoutManager(getContext()));
         binding.rvProfile.setHasFixedSize(true);
 
         adapter.notifyItemInserted(0);
@@ -72,11 +76,11 @@ public class MainActivity extends AppCompatActivity {
 
         switch(v.getId()) {
             case R.id.friendSearch:
-                intent = new Intent(this, FriendSearchActivity.class);
+                intent = new Intent(getContext(), FriendSearchActivity.class);
                 startActivity(intent);
                 break;
             case R.id.friendRequest:
-                intent = new Intent(this, FriendRequestActivity.class);
+                intent = new Intent(getContext(), FriendRequestActivity.class);
                 startActivity(intent);
                 break;
         }
