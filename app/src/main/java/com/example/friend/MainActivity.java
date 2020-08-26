@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,18 +18,19 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
 
-public class MainActivity extends Fragment {
+public class MainActivity extends Fragment implements View.OnClickListener {
 
     ArrayList<Profile> mProfiles = new ArrayList<>();
-    ActivityMainBinding binding;
-
+    ActivityMainBinding activityMainBinding;
+    Button friendSearch;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        activityMainBinding = ActivityMainBinding.inflate(getLayoutInflater());
+    //    friendSearch = activityMainBinding.friendSearch;
         mShowProfile();
 
-        return binding.getRoot();
+        return activityMainBinding.getRoot();
     }
 
     public void mShowProfile() { // 프로필 보여주기
@@ -64,16 +66,17 @@ public class MainActivity extends Fragment {
 
         // 어댑터 할당
         MyAdapter adapter = new MyAdapter(mProfiles, getContext());
-        binding.rvProfile.setAdapter(adapter);
-        binding.rvProfile.setLayoutManager(new LinearLayoutManager(getContext()));
-        binding.rvProfile.setHasFixedSize(true);
+        activityMainBinding.rvProfile.setAdapter(adapter);
+        activityMainBinding.rvProfile.setLayoutManager(new LinearLayoutManager(getContext()));
+        activityMainBinding.rvProfile.setHasFixedSize(true);
 
         adapter.notifyItemInserted(0);
     }
 
-    public void mOnClick(View v) { // 친구 찾기, 친구 요청 목록
-        Intent intent;
 
+    @Override
+    public void onClick(View v) {
+        Intent intent;
         switch(v.getId()) {
             case R.id.friendSearch:
                 intent = new Intent(getContext(), FriendSearchActivity.class);

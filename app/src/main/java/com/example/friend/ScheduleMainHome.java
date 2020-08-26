@@ -1,24 +1,26 @@
 package com.example.friend;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import com.example.friend.databinding.ActivityScheduleMainHomeBinding;
 
-public class ScheduleMainHome extends AppCompatActivity {
+public class ScheduleMainHome extends Fragment {
     private ActivityScheduleMainHomeBinding activityScheduleMainHomeBinding;
     private String date;
 
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         activityScheduleMainHomeBinding = ActivityScheduleMainHomeBinding.inflate(getLayoutInflater());
-        setContentView(activityScheduleMainHomeBinding.getRoot());
-
-        Intent getMainIntent = getIntent();
+        Intent getMainIntent = getActivity().getIntent();
         String schedule_name = getMainIntent.getStringExtra("schedule_name");
         activityScheduleMainHomeBinding.scheduleName.setText(schedule_name);
 
@@ -26,10 +28,10 @@ public class ScheduleMainHome extends AppCompatActivity {
         activityScheduleMainHomeBinding.setScheduleBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),SetScheduleCalender.class);
+                Intent intent = new Intent(getContext(),SetScheduleCalender.class);
                 startActivity(intent);
 
-                Intent getCalender = getIntent();
+                Intent getCalender = getActivity().getIntent();
                 date = getCalender.getStringExtra("Date");
                 activityScheduleMainHomeBinding.infromBtn.setText(date);
                 //finish();
@@ -39,7 +41,7 @@ public class ScheduleMainHome extends AppCompatActivity {
         activityScheduleMainHomeBinding.setLocationBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), SetLocationPick.class);
+                Intent intent = new Intent(getContext(), SetLocationPick.class);
                 startActivity(intent);
             }
         });
@@ -47,7 +49,7 @@ public class ScheduleMainHome extends AppCompatActivity {
         activityScheduleMainHomeBinding.realTimePositionBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), MemberPosition.class);
+                Intent intent = new Intent(getContext(), MemberPosition.class);
                 startActivity(intent);
             }
         });
@@ -55,11 +57,13 @@ public class ScheduleMainHome extends AppCompatActivity {
         activityScheduleMainHomeBinding.infromBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), InformLocation.class);
+                Intent intent = new Intent(getContext(), InformLocation.class);
                 startActivity(intent);
             }
         });
 
 
+        return activityScheduleMainHomeBinding.getRoot();
     }
+
 }

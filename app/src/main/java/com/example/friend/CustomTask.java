@@ -17,7 +17,7 @@ class CustomTask extends AsyncTask<String, Void, String> {
     protected String doInBackground(String... strings) {
         try {
             String str;
-            URL url = new URL("http://223.194.158.38:8080/scheduleAPP/scheduleList.jsp");
+            URL url = new URL("http://192.168.1.64:8080/server/DBserver.jsp");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
             conn.setRequestMethod("POST");

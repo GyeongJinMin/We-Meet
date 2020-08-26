@@ -34,21 +34,25 @@ public class JoinActivity extends AppCompatActivity {
                         Toast.makeText(v.getContext(), "아이디를 입력하세요.", Toast.LENGTH_SHORT).show();
                         registerInputID.setText("");
                         registerInputPW.setText("");
+                        registerInputName.setText("");
                     }
                     else if(result.equals("emptypw")){
                         Toast.makeText(v.getContext(), "비밀번호를 입력하세요.", Toast.LENGTH_SHORT).show();
                         registerInputID.setText("");
                         registerInputPW.setText("");
+                        registerInputName.setText("");
                     }
                     else if(result.equals("emptyname")){
                         Toast.makeText(v.getContext(), "이름을 입력하세요.", Toast.LENGTH_SHORT).show();
                         registerInputID.setText("");
                         registerInputPW.setText("");
+                        registerInputName.setText("");
                     }
                     else if(result.equals("id")) {
                         Toast.makeText(v.getContext(), "이미 있는 아이디입니다.", Toast.LENGTH_SHORT).show();
                         registerInputID.setText("");
                         registerInputPW.setText("");
+                        registerInputName.setText("");
                     }
                     else if(result.equals("ok")){
                         Toast.makeText(v.getContext(),"가입되었습니다.",Toast.LENGTH_SHORT).show();

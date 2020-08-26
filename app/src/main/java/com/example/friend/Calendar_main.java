@@ -7,26 +7,29 @@ import android.content.pm.Signature;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.CalendarView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
+import com.example.friend.databinding.CalendarMainBinding;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-
 //1 캘린더 메인
-public class Calendar_main extends AppCompatActivity {
+public class Calendar_main extends Fragment {
     CalendarView mCalendar;
-
-
+    CalendarMainBinding binding;
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.calendar_main);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        binding = CalendarMainBinding.inflate(getLayoutInflater());
         try {
-            PackageInfo info = getPackageManager().getPackageInfo("com.example.test2", PackageManager.GET_SIGNATURES);
+            PackageInfo info = getContext().getPackageManager().getPackageInfo("com.example.friend", PackageManager.GET_SIGNATURES);
             for (Signature signature : info.signatures) {
                 MessageDigest md = MessageDigest.getInstance("SHA");
                 md.update(signature.toByteArray());
@@ -37,14 +40,14 @@ public class Calendar_main extends AppCompatActivity {
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         } // 카카오 api 키 해시 구하는 과정
-        mCalendar=findViewById(R.id.calendarView);
+        mCalendar=binding.calendarView;
 
 
         mCalendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView calendarView, int y, int m,
                                             int d) {
-                Intent intent = new Intent(getApplicationContext(), Calendar_popup.class);
+                Intent intent = new Intent(getContext(), Calendar_popup.class);
                 intent.putExtra("year", y);
                 intent.putExtra("month", m);
                 intent.putExtra("day",d);
@@ -52,6 +55,8 @@ public class Calendar_main extends AppCompatActivity {
             }
         });
 
+        return binding.getRoot();
     }
 
-}
+    }
+
