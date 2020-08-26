@@ -1,46 +1,49 @@
 package com.example.friend;
 
-import android.app.LocalActivityManager;
-import android.content.Intent;
 import android.os.Bundle;
-import android.widget.TabHost;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
+
+import com.google.android.material.tabs.TabLayout;
 
 public class TabActivity extends AppCompatActivity {
-    private LocalActivityManager mlam;
+    private TabLayout tabLayout;
+    private ViewPager viewPager;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        // ... 코드 계속
-
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_tab);
-        mlam = new LocalActivityManager(this, false);
-        mlam.dispatchCreate(savedInstanceState);
-        TabHost tabHost1 = (TabHost) findViewById(R.id.tabHost1);
-        tabHost1.setup(mlam);
-        TabHost.TabSpec spec;
-        Intent intent;
+        tabLayout = (TabLayout) findViewById(R.id.tabLayout);
+        tabLayout.addTab(tabLayout.newTab().setText("친구목록"));
+        tabLayout.addTab(tabLayout.newTab().setText("달력"));
+        tabLayout.addTab(tabLayout.newTab().setText("스케줄"));
+        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+        viewPager = (ViewPager) findViewById(R.id.pager);
+        TabPagerAdapter pagerAdapter = new TabPagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
+        viewPager.setAdapter(pagerAdapter);
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
-        intent = new Intent().setClass(this, MainActivity.class);
-        spec = tabHost1.newTabSpec("friend").setIndicator("friend").setContent(intent);
-        tabHost1.addTab(spec);
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewPager.setCurrentItem(tab.getPosition());
+            }
 
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
 
+            }
 
-        intent = new Intent().setClass(this, Calendar_main.class);
-        spec = tabHost1.newTabSpec("calendar").setIndicator("calendar").setContent(intent);
-        tabHost1.addTab(spec);
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
 
-        intent = new Intent().setClass(this, ScheduleMainActivity.class);
-        spec = tabHost1.newTabSpec("schedule").setIndicator("schedule").setContent(intent);
-        tabHost1.addTab(spec);
+            }
+        });
 
-        tabHost1.setCurrentTab(0);
 
     }
 

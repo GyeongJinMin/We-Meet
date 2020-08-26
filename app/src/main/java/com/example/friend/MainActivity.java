@@ -2,9 +2,14 @@ package com.example.friend;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.friend.databinding.ActivityMainBinding;
@@ -13,18 +18,19 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends Fragment implements View.OnClickListener {
 
     ArrayList<Profile> mProfiles = new ArrayList<>();
-    ActivityMainBinding binding;
-
+    ActivityMainBinding activityMainBinding;
+    Button friendSearch;
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
-
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        activityMainBinding = ActivityMainBinding.inflate(getLayoutInflater());
+    //    friendSearch = activityMainBinding.friendSearch;
         mShowProfile();
+
+        return activityMainBinding.getRoot();
     }
 
     public void mShowProfile() { // 프로필 보여주기
@@ -59,24 +65,25 @@ public class MainActivity extends AppCompatActivity {
         // <친구> 화면에 보여줄 본인, 친구목록
 
         // 어댑터 할당
-        MyAdapter adapter = new MyAdapter(mProfiles, this);
-        binding.rvProfile.setAdapter(adapter);
-        binding.rvProfile.setLayoutManager(new LinearLayoutManager(this));
-        binding.rvProfile.setHasFixedSize(true);
+        MyAdapter adapter = new MyAdapter(mProfiles, getContext());
+        activityMainBinding.rvProfile.setAdapter(adapter);
+        activityMainBinding.rvProfile.setLayoutManager(new LinearLayoutManager(getContext()));
+        activityMainBinding.rvProfile.setHasFixedSize(true);
 
         adapter.notifyItemInserted(0);
     }
 
-    public void mOnClick(View v) { // 친구 찾기, 친구 요청 목록
-        Intent intent;
 
+    @Override
+    public void onClick(View v) {
+        Intent intent;
         switch(v.getId()) {
             case R.id.friendSearch:
-                intent = new Intent(this, FriendSearchActivity.class);
+                intent = new Intent(getContext(), FriendSearchActivity.class);
                 startActivity(intent);
                 break;
             case R.id.friendRequest:
-                intent = new Intent(this, FriendRequestActivity.class);
+                intent = new Intent(getContext(), FriendRequestActivity.class);
                 startActivity(intent);
                 break;
         }

@@ -1,35 +1,42 @@
 package com.example.friend;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import com.example.friend.databinding.ActivitySetLocationCenterBinding;
 
-public class SetLocationCenter extends AppCompatActivity {
+public class SetLocationCenter extends Fragment {
     private ActivitySetLocationCenterBinding activitySetLocationCenterBinding;
+
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         activitySetLocationCenterBinding = ActivitySetLocationCenterBinding.inflate(getLayoutInflater());
-        setContentView(activitySetLocationCenterBinding.getRoot());
 
         activitySetLocationCenterBinding.pickLocationBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                getActivity().finish();
             }
         });
 
         activitySetLocationCenterBinding.calcBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), CalcLocation.class);
+                Intent intent = new Intent(getContext(), CalcLocation.class);
                 startActivity(intent);
-                finish();
+                getActivity().finish();
             }
         });
+        return activitySetLocationCenterBinding.getRoot();
     }
+
+
 }

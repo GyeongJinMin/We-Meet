@@ -1,46 +1,47 @@
 package com.example.friend;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.LinearLayout;
+import android.view.ViewGroup;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.friend.databinding.ActivityAddNewScheduleBinding;
 
 import java.util.ArrayList;
 
 
-public class AddNewScheduleActivity extends AppCompatActivity {
+public class AddNewScheduleActivity extends Fragment {
     private ActivityAddNewScheduleBinding activityAddNewScheduleBinding;
     //private RecyclerView member_list;
     private MemberAdapter memberAdapter;
 
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         activityAddNewScheduleBinding = ActivityAddNewScheduleBinding.inflate(getLayoutInflater());
-        setContentView(activityAddNewScheduleBinding.getRoot());
-
         member_init();
 
         activityAddNewScheduleBinding.finishBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), ScheduleMainHome.class);
+                Intent intent = new Intent(getContext(), ScheduleMainHome.class);
                 startActivity(intent);
                 //finish();
             }
         });
-
+        return activityAddNewScheduleBinding.getRoot();
     }
 
+
     private void member_init(){
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         activityAddNewScheduleBinding.memberView.setLayoutManager(layoutManager);
 
         ArrayList<Person> member = new ArrayList<>();
@@ -49,7 +50,7 @@ public class AddNewScheduleActivity extends AppCompatActivity {
         member.add(new Person("민경진"));
         member.add(new Person("최지호"));
 
-        memberAdapter = new MemberAdapter(this, member, onClickItem);
+        memberAdapter = new MemberAdapter(getContext(), member, onClickItem);
         activityAddNewScheduleBinding.memberView.setAdapter(memberAdapter);
 
     }
@@ -58,7 +59,7 @@ public class AddNewScheduleActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             String tag = (String) v.getTag();
-            Toast.makeText(AddNewScheduleActivity.this, tag, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), tag, Toast.LENGTH_SHORT).show();
         }
     };
 }

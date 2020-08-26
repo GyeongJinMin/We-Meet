@@ -1,11 +1,5 @@
 package com.example.friend;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -14,19 +8,25 @@ import android.content.pm.Signature;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.renderscript.ScriptGroup;
 import android.util.Base64;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.friend.databinding.ActivityScheduleMainBinding;
 
@@ -34,19 +34,17 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
-public class ScheduleMainActivity extends AppCompatActivity {
+public class ScheduleMainActivity extends Fragment {
     private ActivityScheduleMainBinding activityScheduleMainBinding;
     private ArrayList<Schedule> schedules;
     private ScheduleAdapter scheduleAdapter;
 
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         activityScheduleMainBinding = ActivityScheduleMainBinding.inflate(getLayoutInflater());
-        setContentView(activityScheduleMainBinding.getRoot());
-
         try {
-            PackageInfo info = getPackageManager().getPackageInfo("com.example.schedule", PackageManager.GET_SIGNATURES);
+            PackageInfo info = getContext().getPackageManager().getPackageInfo("com.example.friend", PackageManager.GET_SIGNATURES);
             for (Signature signature : info.signatures) {
                 MessageDigest md = MessageDigest.getInstance("SHA");
                 md.update(signature.toByteArray());
@@ -58,21 +56,21 @@ public class ScheduleMainActivity extends AppCompatActivity {
             e.printStackTrace();
         } // 카카오 api 키 해시 구하는 과정
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         activityScheduleMainBinding.scheduleList.setLayoutManager(linearLayoutManager);
 
         schedules = new ArrayList<>();
-        scheduleAdapter = new ScheduleAdapter(ScheduleMainActivity.this, schedules);
+        scheduleAdapter = new ScheduleAdapter(getContext(), schedules);
         activityScheduleMainBinding.scheduleList.setAdapter(scheduleAdapter);
 
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(activityScheduleMainBinding.scheduleList.getContext(),linearLayoutManager.getOrientation());
         activityScheduleMainBinding.scheduleList.addItemDecoration(dividerItemDecoration);
 
-        activityScheduleMainBinding.scheduleList.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), activityScheduleMainBinding.scheduleList, new ClickListener() {
+        activityScheduleMainBinding.scheduleList.addOnItemTouchListener(new RecyclerTouchListener(getContext(), activityScheduleMainBinding.scheduleList, new ClickListener() {
             @Override
             public void onClick(View view, int position) {
                 Schedule schedule = schedules.get(position);
-                Intent intent = new Intent(getApplicationContext(),ScheduleMainHome.class);
+                Intent intent = new Intent(getContext(),ScheduleMainHome.class);
                 intent.putExtra("schedule_name",schedule.getSchedule_name());
                 startActivity(intent);
             }
@@ -85,8 +83,8 @@ public class ScheduleMainActivity extends AppCompatActivity {
         activityScheduleMainBinding.addScheduleBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(ScheduleMainActivity.this);
-                View view = LayoutInflater.from(ScheduleMainActivity.this).inflate(R.layout.activity_add_new_schedule,null,false);
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                View view = LayoutInflater.from(getContext()).inflate(R.layout.activity_add_new_schedule,null,false);
                 builder.setView(view);
 
                 final Button finish_btn = (Button) view.findViewById(R.id.finish_btn);
@@ -107,7 +105,7 @@ public class ScheduleMainActivity extends AppCompatActivity {
 
                         dialog.dismiss();
 
-                        Intent intent = new Intent(getApplicationContext(),ScheduleMainHome.class);
+                        Intent intent = new Intent(getContext(),ScheduleMainHome.class);
                         intent.putExtra("schedule_name",schedule_name);
                         startActivity(intent);
                     }
@@ -123,6 +121,7 @@ public class ScheduleMainActivity extends AppCompatActivity {
                 window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             }
         });
+        return activityScheduleMainBinding.getRoot();
     }
 
     public interface ClickListener {
