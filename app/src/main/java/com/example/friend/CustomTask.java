@@ -17,10 +17,11 @@ class CustomTask extends AsyncTask<String, Void, String> {
     protected String doInBackground(String... strings) {
         try {
             String str;
-            URL url = new URL("http://192.168.1.64:8080/server/DBserver.jsp");
+            URL url = new URL("http://192.168.200.100:8080/server/DBserver.jsp");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
             conn.setRequestMethod("POST");
+            
             OutputStreamWriter osw = new OutputStreamWriter(conn.getOutputStream());
             sendMsg = "id="+strings[0]+"&pwd="+strings[1]+"&name="+strings[2]+"&type="+strings[3];
             osw.write(sendMsg);
