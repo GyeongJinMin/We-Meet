@@ -18,16 +18,30 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
 
-public class MainActivity extends Fragment implements View.OnClickListener {
+public class MainActivity extends Fragment {
 
     ArrayList<Profile> mProfiles = new ArrayList<>();
     ActivityMainBinding activityMainBinding;
     Button friendSearch;
+    Intent intent;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         activityMainBinding = ActivityMainBinding.inflate(getLayoutInflater());
-    //    friendSearch = activityMainBinding.friendSearch;
+        activityMainBinding.friendSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                intent = new Intent(getContext(), FriendSearchActivity.class);
+                startActivity(intent);
+            }
+        });
+        activityMainBinding.friendRequest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                intent = new Intent(getContext(), FriendRequestActivity.class);
+                startActivity(intent);
+            }
+        });
         mShowProfile();
 
         return activityMainBinding.getRoot();
@@ -74,18 +88,6 @@ public class MainActivity extends Fragment implements View.OnClickListener {
     }
 
 
-    @Override
-    public void onClick(View v) {
-        Intent intent;
-        switch(v.getId()) {
-            case R.id.friendSearch:
-                intent = new Intent(getContext(), FriendSearchActivity.class);
-                startActivity(intent);
-                break;
-            case R.id.friendRequest:
-                intent = new Intent(getContext(), FriendRequestActivity.class);
-                startActivity(intent);
-                break;
-        }
-    }
+
 }
+

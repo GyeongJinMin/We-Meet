@@ -23,11 +23,11 @@ import java.security.NoSuchAlgorithmException;
 //1 캘린더 메인
 public class Calendar_main extends Fragment {
     CalendarView mCalendar;
-    CalendarMainBinding binding;
+    CalendarMainBinding calendarMainBinding;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = CalendarMainBinding.inflate(getLayoutInflater());
+        calendarMainBinding = CalendarMainBinding.inflate(getLayoutInflater());
         try {
             PackageInfo info = getContext().getPackageManager().getPackageInfo("com.example.friend", PackageManager.GET_SIGNATURES);
             for (Signature signature : info.signatures) {
@@ -40,7 +40,7 @@ public class Calendar_main extends Fragment {
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         } // 카카오 api 키 해시 구하는 과정
-        mCalendar=binding.calendarView;
+        mCalendar=calendarMainBinding.calendarView;
 
 
         mCalendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
@@ -55,8 +55,7 @@ public class Calendar_main extends Fragment {
             }
         });
 
-        return binding.getRoot();
+        return calendarMainBinding.getRoot();
     }
 
-    }
-
+}
