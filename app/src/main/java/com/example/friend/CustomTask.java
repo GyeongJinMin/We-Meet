@@ -17,13 +17,23 @@ class CustomTask extends AsyncTask<String, Void, String> {
     protected String doInBackground(String... strings) {
         try {
             String str;
-            URL url = new URL("http://192.168.200.100:8080/server/DBserver.jsp");
+            URL url = new URL("http://192.168.0.7:8080/project_Server/DB.jsp");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
             conn.setRequestMethod("POST");
             
             OutputStreamWriter osw = new OutputStreamWriter(conn.getOutputStream());
-            sendMsg = "id="+strings[0]+"&pwd="+strings[1]+"&name="+strings[2]+"&type="+strings[3];
+            if (strings.length <5) {
+                sendMsg = "id="+strings[0]+"&pwd="+strings[1]+"&name="+strings[2]+"&type="+strings[3];
+            }
+            else if (strings.length <6) {
+                sendMsg = "id=" + strings[0] + "&date=" + strings[1] + "&schedule=" + strings[2] +
+                        "&memo=" + strings[3] + "&type=" + strings[4];
+            }
+            else {
+                sendMsg = "id=" + strings[0] + "&date=" + strings[1] + "&schedule=" + strings[2] +
+                        "&memo=" + strings[3] + "&old=" + strings[4] + "&type=" + strings[5];
+            }
             osw.write(sendMsg);
             osw.flush();
             if(conn.getResponseCode() == conn.HTTP_OK) {
