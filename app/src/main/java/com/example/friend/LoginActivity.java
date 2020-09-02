@@ -13,17 +13,23 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class LoginActivity extends Activity {
     EditText userID, userPW;
     Button login, join;
+    //Calendar_main calendar_main;
+    String loginid;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
         try {
             PackageInfo info = getPackageManager().getPackageInfo("com.example.friend", PackageManager.GET_SIGNATURES);
             for (Signature signature : info.signatures) {
@@ -47,12 +53,13 @@ public class LoginActivity extends Activity {
     public void mOnClick(View view){
         switch (view.getId()) {
             case R.id.login : // 로그인 버튼 눌렀을 경우
-                String loginid = userID.getText().toString();
+                loginid = userID.getText().toString();
                 String loginpwd = userPW.getText().toString();
 
                 try {
                     String result  = new CustomTask().execute(loginid, loginpwd, "name", "login").get();
                     if(result.equals("true")) {
+                        writeData(new File(getFilesDir(), "id.txt"));
                         Toast.makeText(this,"로그인",Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(this, TabActivity.class);
                         startActivity(intent);
@@ -72,6 +79,16 @@ public class LoginActivity extends Activity {
                 Intent intent = new Intent(this, JoinActivity.class);
                 startActivity(intent);
                 finish();
+        }
+    }
+
+    void writeData (File file) {
+        try {
+            FileOutputStream fos = new FileOutputStream(file);
+            fos.write(loginid.getBytes());
+            fos.close();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
@@ -33,7 +34,7 @@ public class Calendar_add extends Activity {
                 memo = edit_memo.getText().toString().trim();
                 //빈값이 넘어올때의 처리
                 if(name.getBytes().length <= 0) {
-                    //              Toast.makeText(this, "값을 입력하세요.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "값을 입력하세요.", Toast.LENGTH_SHORT).show();
                 }
                 else {
                     Intent intent = new Intent();
