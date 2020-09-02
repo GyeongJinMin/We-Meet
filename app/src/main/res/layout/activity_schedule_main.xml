@@ -36,28 +36,6 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/friends_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="친구" />
-
-        <Button
-            android:id="@+id/calender_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="달력" />
-
-        <Button
-            android:id="@+id/schedule_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="스케줄" />
-    </LinearLayout>
+        android:orientation="horizontal"/>
 
 </LinearLayout>

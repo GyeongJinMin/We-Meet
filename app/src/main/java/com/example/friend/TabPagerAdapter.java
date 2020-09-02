@@ -22,13 +22,12 @@ public class TabPagerAdapter extends FragmentStatePagerAdapter {
             case 0:
                 MainActivity Fragment1 = new MainActivity();
                 return Fragment1;
-
             case 1:
-                ScheduleMainActivity Fragment2 = new ScheduleMainActivity();
-                return Fragment2;
-            case 2:
                 Calendar_main Fragment3 = new Calendar_main();
                 return Fragment3;
+            case 2:
+                ScheduleMainActivity Fragment2 = new ScheduleMainActivity();
+                return Fragment2;
             default:
                 return null;
         }
