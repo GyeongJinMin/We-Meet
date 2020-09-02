@@ -60,7 +60,7 @@ public class Schedule {
     }
 
     public String getSche_name() {
-        return this.getSche_name();
+        return this.sche_name;
     }
 
     public Date getDate() {
