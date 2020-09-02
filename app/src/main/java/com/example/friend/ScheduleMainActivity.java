@@ -33,31 +33,30 @@ import com.example.friend.databinding.ActivityScheduleMainBinding;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 public class ScheduleMainActivity extends Fragment {
     private ActivityScheduleMainBinding activityScheduleMainBinding;
     private ArrayList<Schedule> schedules;
     private ScheduleAdapter scheduleAdapter;
+    String[] schedule_list;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         activityScheduleMainBinding = ActivityScheduleMainBinding.inflate(getLayoutInflater());
-        try {
-            PackageInfo info = getContext().getPackageManager().getPackageInfo("com.example.friend", PackageManager.GET_SIGNATURES);
-            for (Signature signature : info.signatures) {
-                MessageDigest md = MessageDigest.getInstance("SHA");
-                md.update(signature.toByteArray());
-                Log.e("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
-            }
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } // 카카오 api 키 해시 구하는 과정
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         activityScheduleMainBinding.scheduleList.setLayoutManager(linearLayoutManager);
+
+        try {
+            String result = new CustomTask().execute("id","id","name","loadSche").get();
+            schedule_list = result.split("\t");
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         schedules = new ArrayList<>();
         scheduleAdapter = new ScheduleAdapter(getContext(), schedules);
