@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="320dp"
+    android:layout_height="550dp"
+    android:layout_gravity="center"
+    android:background="#F4E7E7"
+
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="272dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:paddingBottom="20dp">
+
+        <TextView
+            android:id="@+id/text_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:layout_weight="2"
+            android:text="2020/07/29"
+            android:textColor="#000000"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.067"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/btn_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="40dp"
+            android:layout_weight="1"
+            android:text="일정 추가"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.88"
+            app:layout_constraintStart_toEndOf="@+id/text_date"
+            app:layout_constraintTop_toTopOf="parent" />
+    </LinearLayout>
+
+
+    <ListView
+        android:id="@+id/listview"
+        android:layout_width="272dp"
+        android:layout_height="422dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:background="#FFFFFF"
+        android:footerDividersEnabled="true"
+        android:headerDividersEnabled="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_date" />
+
+</LinearLayout>

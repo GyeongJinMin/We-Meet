@@ -21,7 +21,6 @@
         android:layout_height="40dp"
         android:layout_margin="5dp"
         android:src="@android:drawable/ic_input_add"
-        android:onClick="mOnClick"
         app:layout_constraintEnd_toStartOf="@+id/friendRequest"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -30,7 +29,6 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_margin="5dp"
-        android:onClick="mOnClick"
         android:src="@android:drawable/ic_menu_send"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
