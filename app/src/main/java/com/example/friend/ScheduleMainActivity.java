@@ -30,6 +30,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.friend.databinding.ActivityScheduleMainBinding;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -49,31 +51,36 @@ public class ScheduleMainActivity extends Fragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         activityScheduleMainBinding.scheduleList.setLayoutManager(linearLayoutManager);
 
+        schedules = new ArrayList<>();
+        scheduleAdapter = new ScheduleAdapter(getContext(), schedules);
+        activityScheduleMainBinding.scheduleList.setAdapter(scheduleAdapter);
+
         try {
             String result = new CustomTask().execute("id","id","name","loadSche").get();
-            schedule_list = result.split("\t");
+            if (result.getBytes().length > 0) {
+                schedule_list = result.split("\t");
+
+                for (int i = 0; i < schedule_list.length; i = i + 2) { //나누기
+                    schedules.add(0, new Schedule(schedule_list[i]));
+                    scheduleAdapter.notifyItemInserted(0);
+                    //Log.i("sche","msg : "+ schedule_list[i].toString());
+                }
+            }
         } catch (ExecutionException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
-        schedules = new ArrayList<>();
-        scheduleAdapter = new ScheduleAdapter(getContext(), schedules);
-        activityScheduleMainBinding.scheduleList.setAdapter(scheduleAdapter);
-
-        schedules.add(0,new Schedule(schedule_list[0]));
-        scheduleAdapter.notifyItemInserted(0);
-
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(activityScheduleMainBinding.scheduleList.getContext(),linearLayoutManager.getOrientation());
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(activityScheduleMainBinding.scheduleList.getContext(), linearLayoutManager.getOrientation());
         activityScheduleMainBinding.scheduleList.addItemDecoration(dividerItemDecoration);
 
         activityScheduleMainBinding.scheduleList.addOnItemTouchListener(new RecyclerTouchListener(getContext(), activityScheduleMainBinding.scheduleList, new ClickListener() {
             @Override
             public void onClick(View view, int position) {
                 Schedule schedule = schedules.get(position);
-                Intent intent = new Intent(getContext(),ScheduleMainHome.class);
-                intent.putExtra("schedule_name",schedule.getSche_name());
+                Intent intent = new Intent(getContext(), ScheduleMainHome.class);
+                intent.putExtra("schedule_name", schedule.getSche_name());
                 startActivity(intent);
             }
 
@@ -86,7 +93,7 @@ public class ScheduleMainActivity extends Fragment {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                View view = LayoutInflater.from(getContext()).inflate(R.layout.activity_add_new_schedule,null,false);
+                View view = LayoutInflater.from(getContext()).inflate(R.layout.activity_add_new_schedule, null, false);
                 builder.setView(view);
 
                 final Button finish_btn = (Button) view.findViewById(R.id.finish_btn);
@@ -99,16 +106,18 @@ public class ScheduleMainActivity extends Fragment {
                     @Override
                     public void onClick(View v) {
                         String schedule_name = edit_schedule_name.getText().toString();
-
-                        Schedule schedule = new Schedule(schedule_name);
-                        schedules.add(0,schedule);
-                        scheduleAdapter.notifyItemInserted(0);
-                        // 서버에도 저장하기
+                        try {
+                            String result = new CustomTask().execute("lsy", schedule_name, "addSche").get();
+                        } catch (ExecutionException e) {
+                            e.printStackTrace();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
 
                         dialog.dismiss();
 
-                        Intent intent = new Intent(getContext(),ScheduleMainHome.class);
-                        intent.putExtra("schedule_name",schedule_name);
+                        Intent intent = new Intent(getContext(), ScheduleMainHome.class);
+                        intent.putExtra("schedule_name", schedule_name);
                         startActivity(intent);
                     }
                 });
@@ -173,6 +182,7 @@ public class ScheduleMainActivity extends Fragment {
         public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
         }
     }
+
 }
 
 

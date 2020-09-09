@@ -26,7 +26,7 @@ class CustomTask extends AsyncTask<String, Void, String> {
     protected String doInBackground(String... strings) {
         try {
             String str;
-            URL url = new URL("http://192.168.123.105:8080/server/DBserver.jsp");
+            URL url = new URL("http://192.168.0.4:8080/server/DBserver.jsp");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
             conn.setRequestMethod("POST");
@@ -41,6 +41,9 @@ class CustomTask extends AsyncTask<String, Void, String> {
             }
             else if(sendMsg.equals("addFriend")) {
                 sendMsg = "id=" + strings[0] + "&friendName=" + strings[1] + "&type=" + strings[2];
+            }
+            else if(strings.length==3){
+                sendMsg = "id="+strings[0]+"&sche_name="+strings[1]+"&type="+strings[2];
             }
             else if (strings.length <5) {
                 sendMsg = "id="+strings[0]+"&pwd="+strings[1]+"&name="+strings[2]+"&type="+strings[3];
