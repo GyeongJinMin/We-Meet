@@ -16,6 +16,7 @@ import com.example.friend.databinding.ActivityFriendSearchBinding;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.concurrent.ExecutionException;
 
 public class FriendSearchActivity extends AppCompatActivity {
 
@@ -23,6 +24,8 @@ public class FriendSearchActivity extends AppCompatActivity {
     ArrayList<Profile> mSearches = new ArrayList<>(); // 검색 결과(띄워주는 리스트)
     ActivityFriendSearchBinding binding;
     MyAdapterSearch adapter;
+    private String[] users;
+    private String sendMsg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,25 +115,26 @@ public class FriendSearchActivity extends AppCompatActivity {
     }
 
     public void setting() { // 전체 사용자
-        // 여기서부터 ------------------------------------------------------------------------------
-        String[] users = {"민경진", "이수연", "이규영", "최지호", "허예원", "박서연", "오아람", "홍승현",
-                "경수진", "김대명", "홍길동", "홍길순", "조정석", "정동원", "오정세", "유연석",
-                "김호중", "김세정", "상상부기", "서예지", "비", "영탁", "김희재", "김영웅",
-                "윤시윤", "유재석", "이찬원", "이효리", "장민호", "정경호", "전미도", "김수현",
-                "지석진", "김종국", "송지효", "전소민", "양세찬", "이광수", "하하", "오마이걸",
-                "방탄소년단", "싹쓰리", "전소미", "청하", "블랙핑크", "악동뮤지션", "유연정" };
+        sendMsg = "loadAllUsers";
 
-        // mRequests 리스트에 사용자 목록 추가
-        for(int i=0; i<users.length; i++) {
-            String name = users[i];
-            int img = R.drawable.ic_launcher_foreground;
-            mSearches.add(new Profile(img, name));
+        try {
+            String result = new CustomTask(sendMsg).execute("loadAllUsers").get();
+            users = result.split("\t");
+
+            // mRequests 리스트에 사용자 목록 추가
+            for(int i=0; i<users.length; i++) {
+                String name = users[i];
+                int img = R.drawable.ic_launcher_foreground;
+                mSearches.add(new Profile(img, name));
+            }
+
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
 
         // 사전순 정렬
         Collections.sort(mSearches);
-        // 여기까지 수정 ---------------------------------------------------------------------------
-        // 1. 전체 사용자를 처음부터 사전순으로
-        // 2. Collections.sort(mRequests); 사용
     }
 }

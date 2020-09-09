@@ -13,24 +13,43 @@ import java.net.URL;
 
 class CustomTask extends AsyncTask<String, Void, String> {
     String sendMsg, receiveMsg;
+
+    CustomTask() {
+        this.sendMsg = "";
+    }
+
+    CustomTask(String sendMsg) {
+        this.sendMsg = sendMsg;
+    }
+
     @Override
     protected String doInBackground(String... strings) {
         try {
             String str;
-            URL url = new URL("http://192.168.0.4:8080/server/DBserver.jsp");
+            URL url = new URL("http://192.168.123.105:8080/server/DBserver.jsp");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
             conn.setRequestMethod("POST");
             
             OutputStreamWriter osw = new OutputStreamWriter(conn.getOutputStream());
-            if (strings.length <5) {
+
+            if(sendMsg.equals("loadUser")||sendMsg.equals("loadFriends")) {
+                sendMsg = "id="+strings[0] + "&type="+strings[1];
+            }
+            else if(sendMsg.equals("loadAllUsers")) {
+                sendMsg = "&type="+strings[0];
+            }
+            else if(sendMsg.equals("addFriend")) {
+                sendMsg = "id=" + strings[0] + "&friendName=" + strings[1] + "&type=" + strings[2];
+            }
+            else if (strings.length <5) {
                 sendMsg = "id="+strings[0]+"&pwd="+strings[1]+"&name="+strings[2]+"&type="+strings[3];
             }
             else if (strings.length <6) {
                 sendMsg = "id=" + strings[0] + "&date=" + strings[1] + "&schedule=" + strings[2] +
                         "&memo=" + strings[3] + "&type=" + strings[4];
             }
-            else {
+            else  {
                 sendMsg = "id=" + strings[0] + "&date=" + strings[1] + "&schedule=" + strings[2] +
                         "&memo=" + strings[3] + "&old=" + strings[4] + "&type=" + strings[5];
             }
@@ -44,7 +63,6 @@ class CustomTask extends AsyncTask<String, Void, String> {
                     buffer.append(str);
                 }
                 receiveMsg = buffer.toString();
-
             } else {
                 Log.i("통신 결과", conn.getResponseCode()+"에러");
             }
