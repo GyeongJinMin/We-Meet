@@ -32,11 +32,15 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="7.5">
-
-        <androidx.recyclerview.widget.RecyclerView
+        <RelativeLayout
+            android:id="@+id/map_view"
             android:layout_width="match_parent"
-            android:layout_height="552dp" />
-    </LinearLayout>
+            android:layout_height="match_parent"
+            android:layout_below="@+id/button"
+            android:layout_marginTop="-48dp"
+            android:background="#FFFFFF">
+
+        </RelativeLayout></LinearLayout>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
