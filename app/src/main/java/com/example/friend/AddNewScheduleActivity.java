@@ -26,7 +26,7 @@ public class AddNewScheduleActivity extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         activityAddNewScheduleBinding = ActivityAddNewScheduleBinding.inflate(getLayoutInflater());
-        member_init();
+        //member_init();
 
         activityAddNewScheduleBinding.finishBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -40,7 +40,7 @@ public class AddNewScheduleActivity extends Fragment {
     }
 
 
-    private void member_init(){
+    /*private void member_init(){
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         activityAddNewScheduleBinding.memberView.setLayoutManager(layoutManager);
 
@@ -53,7 +53,7 @@ public class AddNewScheduleActivity extends Fragment {
         memberAdapter = new MemberAdapter(getContext(), member, onClickItem);
         activityAddNewScheduleBinding.memberView.setAdapter(memberAdapter);
 
-    }
+    }*/
 
     private View.OnClickListener onClickItem = new View.OnClickListener() {
         @Override
