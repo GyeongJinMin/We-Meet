@@ -29,19 +29,6 @@ public class LoginActivity extends Activity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
-        try {
-            PackageInfo info = getPackageManager().getPackageInfo("com.example.friend", PackageManager.GET_SIGNATURES);
-            for (Signature signature : info.signatures) {
-                MessageDigest md = MessageDigest.getInstance("SHA");
-                md.update(signature.toByteArray());
-                Log.e("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
-            }
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } // 카카오 api 키 해시 구하는 과정
         userID = (EditText)findViewById(R.id.userID);
         userPW = (EditText)findViewById(R.id.userPW);
         login = (Button)findViewById(R.id.login);

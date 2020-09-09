@@ -31,7 +31,9 @@ public class Calendar_popup extends Activity {
     private String calendar_db, date;
     private int edit_num;
 
-
+    public String getId() {
+        return id;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
