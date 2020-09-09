@@ -10,26 +10,26 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.example.friend.databinding.ActivitySetScheduleCalenderBinding;
 
-public class SetScheduleCalender extends Fragment {
+public class SetScheduleCalender extends AppCompatActivity {
     private ActivitySetScheduleCalenderBinding activitySetScheduleCalenderBinding;
 
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         activitySetScheduleCalenderBinding = ActivitySetScheduleCalenderBinding.inflate(getLayoutInflater());
-
-        return activitySetScheduleCalenderBinding.getRoot();
+        setContentView(activitySetScheduleCalenderBinding.getRoot());
     }
 
 
 
     public void OnClickHandler (View view)
     {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("일정 선택").setMessage("이 날로 하시겠습니까?");
 
         builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -43,9 +43,9 @@ public class SetScheduleCalender extends Fragment {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 //일정 넘기기
-                Intent intent = getActivity().getIntent();
+                Intent intent = getIntent();
                 intent.putExtra("Date",activitySetScheduleCalenderBinding.calendarView.getDate());
-                getActivity().finish();
+                finish();
 
             }
         });

@@ -8,13 +8,42 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.example.friend.databinding.ActivitySetLocationCenterBinding;
 
-public class SetLocationCenter extends Fragment {
+public class SetLocationCenter extends AppCompatActivity {
     private ActivitySetLocationCenterBinding activitySetLocationCenterBinding;
 
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+
+
+
+        activitySetLocationCenterBinding = ActivitySetLocationCenterBinding.inflate(getLayoutInflater());
+
+        setContentView(activitySetLocationCenterBinding.getRoot());
+        activitySetLocationCenterBinding.pickLocationBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        activitySetLocationCenterBinding.calcBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), CalcLocation.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+    }
+/*
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -37,6 +66,8 @@ public class SetLocationCenter extends Fragment {
         });
         return activitySetLocationCenterBinding.getRoot();
     }
+
+ */
 
 
 }
