@@ -10,7 +10,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.friend.databinding.ItemRequestBinding;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 class MyRequestHolder extends RecyclerView.ViewHolder {
 
@@ -26,6 +29,8 @@ public class MyAdapterRequest extends RecyclerView.Adapter {
 
     private List<Profile> mProfiles;
     private Context context;
+
+    private String id, friendName, sendMsg;
 
     MyAdapterRequest(List<Profile> profiles, Context context) {
         mProfiles = profiles;
@@ -56,6 +61,8 @@ public class MyAdapterRequest extends RecyclerView.Adapter {
             public void onClick(View v) {
                 int pos = (int) v.getTag();
                 mProfiles.remove(pos);
+                // 상대방에 검색창에 요청하기 버튼 다시 생성하게..?
+                // 즉, 한번 요청한 상대에게 다시 요청이 가능한가
                 Toast.makeText(context, "거절", Toast.LENGTH_SHORT).show();
                 notifyDataSetChanged();
             }
@@ -63,16 +70,42 @@ public class MyAdapterRequest extends RecyclerView.Adapter {
 
         mHolder.mBinding.btnYes.setTag(holder.getAdapterPosition());
         mHolder.mBinding.btnYes.setOnClickListener(new View.OnClickListener() { // 수락 버튼
-            // 나의 친구목록에 친구 추가(DB..?)
-            // 친구의 친구목록에 나 추가(DB..?)
             @Override
             public void onClick(View v) {
                 int pos = (int) v.getTag();
+                friendName = mProfiles.get(pos).getName(); // 요청을 보낸 친구의 이름
+
+                readData(new File(context.getFilesDir(), "id.txt"));
+                sendMsg = "addFriend";
+
+                try {
+                    String result = new CustomTask(sendMsg).execute(id, friendName, "addFriend").get();
+                    if (result.equals("true")) {
+
+                    }
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
                 mProfiles.remove(pos);
                 Toast.makeText(context, "수락", Toast.LENGTH_SHORT).show();
                 notifyDataSetChanged();
             }
         });
+    }
+
+    void readData(File file) {
+        try {
+            FileInputStream fis = new FileInputStream(file);
+            byte[] data = new byte[fis.available()];
+            fis.read(data);
+            id = new String(data);
+            fis.close();
+        } catch (Exception e ) {
+            e.printStackTrace();
+        }
     }
 
     @Override
