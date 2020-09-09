@@ -62,6 +62,9 @@ public class ScheduleMainActivity extends Fragment {
         scheduleAdapter = new ScheduleAdapter(getContext(), schedules);
         activityScheduleMainBinding.scheduleList.setAdapter(scheduleAdapter);
 
+        schedules.add(0,new Schedule(schedule_list[0]));
+        scheduleAdapter.notifyItemInserted(0);
+
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(activityScheduleMainBinding.scheduleList.getContext(),linearLayoutManager.getOrientation());
         activityScheduleMainBinding.scheduleList.addItemDecoration(dividerItemDecoration);
 
@@ -70,7 +73,7 @@ public class ScheduleMainActivity extends Fragment {
             public void onClick(View view, int position) {
                 Schedule schedule = schedules.get(position);
                 Intent intent = new Intent(getContext(),ScheduleMainHome.class);
-                intent.putExtra("schedule_name",schedule.getSchedule_name());
+                intent.putExtra("schedule_name",schedule.getSche_name());
                 startActivity(intent);
             }
 

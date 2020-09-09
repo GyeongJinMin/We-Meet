@@ -60,7 +60,7 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.Schedu
                         final Button finish_btn = (Button) view.findViewById(R.id.finish_btn);
                         final EditText edit_schedule_name = (EditText) view.findViewById(R.id.edit_schedule_name);
                         // 참여자 받아오기 필요
-                        edit_schedule_name.setText(schedule_list.get(getAdapterPosition()).getSchedule_name());
+                        edit_schedule_name.setText(schedule_list.get(getAdapterPosition()).getSche_name());
 
                         final AlertDialog dialog = builder.create();
 
@@ -127,6 +127,6 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.Schedu
     public void onBindViewHolder(@NonNull ScheduleAdapter.ScheduleViewHolder holder, int position) {
         holder.name.setTextSize(TypedValue.COMPLEX_UNIT_SP, 25);
         holder.name.setGravity(Gravity.LEFT);
-        holder.name.setText(schedule_list.get(position).getSchedule_name());
+        holder.name.setText(schedule_list.get(position).getSche_name());
     }
 }
