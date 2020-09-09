@@ -38,18 +38,6 @@ public class Calendar_main extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         calendarMainBinding = CalendarMainBinding.inflate(getLayoutInflater());
-        try {
-            PackageInfo info = getContext().getPackageManager().getPackageInfo("com.example.friend", PackageManager.GET_SIGNATURES);
-            for (Signature signature : info.signatures) {
-                MessageDigest md = MessageDigest.getInstance("SHA");
-                md.update(signature.toByteArray());
-                Log.e("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
-            }
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } // 카카오 api 키 해시 구하는 과정
         mCalendar=calendarMainBinding.calendarView;
 
         mCalendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {

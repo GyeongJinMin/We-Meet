@@ -2,13 +2,9 @@ package com.example.friend;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.Signature;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.util.Base64;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
@@ -32,8 +28,6 @@ import com.example.friend.databinding.ActivityScheduleMainBinding;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
@@ -42,6 +36,7 @@ public class ScheduleMainActivity extends Fragment {
     private ArrayList<Schedule> schedules;
     private ScheduleAdapter scheduleAdapter;
     String[] schedule_list;
+    private String id;
 
     @Nullable
     @Override
@@ -55,8 +50,10 @@ public class ScheduleMainActivity extends Fragment {
         scheduleAdapter = new ScheduleAdapter(getContext(), schedules);
         activityScheduleMainBinding.scheduleList.setAdapter(scheduleAdapter);
 
+        readData(new File(getContext().getFilesDir(), "id.txt"));
+
         try {
-            String result = new CustomTask().execute("id","id","name","loadSche").get();
+            String result = new CustomTask().execute("loadSche").get();
             if (result.getBytes().length > 0) {
                 schedule_list = result.split("\t");
 
@@ -107,7 +104,7 @@ public class ScheduleMainActivity extends Fragment {
                     public void onClick(View v) {
                         String schedule_name = edit_schedule_name.getText().toString();
                         try {
-                            String result = new CustomTask().execute("lsy", schedule_name, "addSche").get();
+                            String result = new CustomTask().execute(id, schedule_name, "addSche").get();
                         } catch (ExecutionException e) {
                             e.printStackTrace();
                         } catch (InterruptedException e) {
@@ -183,6 +180,18 @@ public class ScheduleMainActivity extends Fragment {
         }
     }
 
+    void readData(File file) {
+        try {
+            FileInputStream fis = new FileInputStream(file);
+            byte[] data = new byte[fis.available()];
+            fis.read(data);
+            id = new String(data);
+            Log.i("id","id = "+id);
+            fis.close();
+        } catch (Exception e ) {
+            e.printStackTrace();
+        }
+    }
 }
 
 

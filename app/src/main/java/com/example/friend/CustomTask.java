@@ -42,7 +42,10 @@ class CustomTask extends AsyncTask<String, Void, String> {
             else if(sendMsg.equals("addFriend")) {
                 sendMsg = "id=" + strings[0] + "&friendName=" + strings[1] + "&type=" + strings[2];
             }
-            else if(strings.length==3){
+            else if(strings.length==1){ //load Schedule
+                sendMsg = "type="+strings[0];
+            }
+            else if(strings.length==3){ //add Schedule
                 sendMsg = "id="+strings[0]+"&sche_name="+strings[1]+"&type="+strings[2];
             }
             else if (strings.length <5) {
