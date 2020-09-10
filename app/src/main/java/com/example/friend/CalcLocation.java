@@ -112,10 +112,15 @@ public class CalcLocation extends AppCompatActivity {
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Intent intent = new Intent(getApplicationContext(), ScheduleMainHome.class);
-                startActivity(intent);
+                Intent intent = new Intent();
+                intent.putExtra("Location", "여기");
+                setResult(0, intent);
+
+                //finish();
             }
         });
+
+
 
         AlertDialog alertDialog = builder.create();
         alertDialog.show();

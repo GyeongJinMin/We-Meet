@@ -26,8 +26,8 @@ class CustomTask extends AsyncTask<String, Void, String> {
     protected String doInBackground(String... strings) {
         try {
             String str;
-            //URL url = new URL("http://192.168.0.4:8080/server/DBserver.jsp"); //수연
-            URL url = new URL("http://192.168.0.7:8080/project_Server/DB.jsp"); //규영
+            URL url = new URL("http://192.168.0.4:8080/server/DBserver.jsp"); //수연
+            //URL url = new URL("http://192.168.0.7:8080/project_Server/DB.jsp"); //규영
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
             conn.setRequestMethod("POST");
@@ -43,11 +43,21 @@ class CustomTask extends AsyncTask<String, Void, String> {
             else if(sendMsg.equals("addFriend")) {
                 sendMsg = "id=" + strings[0] + "&friendName=" + strings[1] + "&type=" + strings[2];
             }
-            else if(strings.length==1){ //load Schedule
+            else if(strings.length==1){ //load All Schedule
                 sendMsg = "type="+strings[0];
             }
+            else if(strings.length==2) { //load Schedule
+                sendMsg = "sche_id="+strings[0]+"&type="+strings[1];
+            }
             else if(strings.length==3){ //add Schedule
-                sendMsg = "id="+strings[0]+"&sche_name="+strings[1]+"&type="+strings[2];
+                if(strings[2].equals("addSche"))
+                    sendMsg = "id="+strings[0]+"&sche_name="+strings[1]+"&type="+strings[2];
+                if(strings[2].equals("setDate"))
+                    sendMsg = "sche_id="+strings[0]+"&sche_date="+strings[1]+"&type="+strings[2];
+                if(strings[2].equals("setLocation"))
+                    sendMsg = "sche_id="+strings[0]+"&location="+strings[1]+"&type="+strings[2];
+                if(strings[2].equals("modiSche"))
+                    sendMsg = "sche_id="+strings[0]+"&new_sche_name="+strings[1]+"&type="+strings[2];
             }
             else if (strings.length <5) {
                 sendMsg = "id="+strings[0]+"&pwd="+strings[1]+"&name="+strings[2]+"&type="+strings[3];

@@ -3,6 +3,7 @@ package com.example.friend;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.ContextMenu;
 import android.view.Gravity;
@@ -22,6 +23,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 import static androidx.appcompat.app.AlertDialog.*;
 
@@ -50,19 +52,23 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.Schedu
 
         private final MenuItem.OnMenuItemClickListener onEditMenu = new MenuItem.OnMenuItemClickListener() {
             @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getItemId()){
+            public boolean onMenuItemClick(final MenuItem item) {
+                switch (item.getItemId()) {
                     case 1001:
                         AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                        View view = LayoutInflater.from(context).inflate(R.layout.activity_add_new_schedule,null,false);
+                        View view = LayoutInflater.from(context).inflate(R.layout.activity_add_new_schedule, null, false);
                         builder.setView(view);
 
                         final Button finish_btn = (Button) view.findViewById(R.id.finish_btn);
                         final EditText edit_schedule_name = (EditText) view.findViewById(R.id.edit_schedule_name);
                         // 참여자 받아오기 필요
+
+                        String sche_id = schedule_list.get(getAdapterPosition()).getSche_id();
                         edit_schedule_name.setText(schedule_list.get(getAdapterPosition()).getSche_name());
 
                         final AlertDialog dialog = builder.create();
+
+                        final String finalSche_id = sche_id;
 
                         finish_btn.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -71,9 +77,16 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.Schedu
 
                                 Schedule schedule = new Schedule(schedule_name);
 
-                                schedule_list.set(getAdapterPosition(),schedule);
+                                schedule_list.set(getAdapterPosition(), schedule);
                                 notifyItemChanged(getAdapterPosition());
-                                // 서버에도 저장하기
+
+                                try {
+                                    String result = new CustomTask().execute(finalSche_id, schedule_name, "modiSche").get();
+                                } catch (ExecutionException e) {
+                                    e.printStackTrace();
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }  // 서버에도 저장하기
 
                                 dialog.dismiss();
                             }
@@ -91,9 +104,17 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.Schedu
                         break;
 
                     case 1002:
+                        sche_id = schedule_list.get(getAdapterPosition()).getSche_id();
+                        try {
+                            String result = new CustomTask().execute(sche_id, "delSche").get();
+                        } catch (ExecutionException e) {
+                            e.printStackTrace();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                         schedule_list.remove(getAdapterPosition());
                         notifyItemRemoved(getAdapterPosition());
-                        notifyItemRangeChanged(getAdapterPosition(),schedule_list.size());
+                        notifyItemRangeChanged(getAdapterPosition(), schedule_list.size());
 
                         break;
                 }

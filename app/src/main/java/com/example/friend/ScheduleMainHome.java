@@ -2,6 +2,7 @@ package com.example.friend;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,9 +14,38 @@ import androidx.fragment.app.Fragment;
 
 import com.example.friend.databinding.ActivityScheduleMainHomeBinding;
 
+import java.util.concurrent.ExecutionException;
+
 public class ScheduleMainHome extends AppCompatActivity {
     private ActivityScheduleMainHomeBinding activityScheduleMainHomeBinding;
     private String date;
+    private String location;
+    private String inform;
+    private String[] schedule;
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 1) {
+            date = data.getStringExtra("Date");
+        }
+        if (requestCode == 2) {
+            location = data.getStringExtra("Location");
+        }
+
+        if (date != null && location != null)
+            inform = date + "\n" + location;
+        else {
+            if (location == null)
+                inform = date;
+            if (date == null)
+                inform = location;
+        }
+
+        activityScheduleMainHomeBinding.infromBtn.setText(inform);
+
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -24,27 +54,57 @@ public class ScheduleMainHome extends AppCompatActivity {
         setContentView(activityScheduleMainHomeBinding.getRoot());
         Intent getMainIntent = getIntent();
         String schedule_name = getMainIntent.getStringExtra("schedule_name");
+        final String schedule_id = getMainIntent.getStringExtra("schedule_id");
         activityScheduleMainHomeBinding.scheduleName.setText(schedule_name);
 
+        try {
+            String result = new CustomTask().execute(schedule_id, "loadSche").get();
+
+            if (result.getBytes().length > 0) {
+                schedule = result.split("\t");
+
+                schedule_name = schedule[0];
+                activityScheduleMainHomeBinding.scheduleName.setText(schedule_name);
+                if(!schedule[1].equals("null"))
+                    date = schedule[1];
+                if(!schedule[2].equals("null"))
+                    location = schedule[2];
+
+                if(date == null && location ==null)
+                    inform = "약속정보";
+                else if (date != null && location != null)
+                    inform = date + "\n" + location;
+                else{
+                    if (location == null)
+                        inform = date;
+                    if (date == null)
+                        inform = location;
+                }
+                activityScheduleMainHomeBinding.infromBtn.setText(inform);
+
+            }
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         activityScheduleMainHomeBinding.setScheduleBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),SetScheduleCalender.class);
-                startActivity(intent);
-
-                Intent getCalender = getIntent();
-                date = getCalender.getStringExtra("Date");
-                activityScheduleMainHomeBinding.infromBtn.setText(date);
-                //finish();
+                Intent intent = new Intent(getApplicationContext(), SetScheduleCalender.class);
+                intent.putExtra("sche_id",schedule_id);
+                startActivityForResult(intent, 1);
             }
         });
+
 
         activityScheduleMainHomeBinding.setLocationBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), SetLocationPick.class);
-                startActivity(intent);
+                intent.putExtra("sche_id",schedule_id);
+                startActivityForResult(intent, 2);
             }
         });
 
