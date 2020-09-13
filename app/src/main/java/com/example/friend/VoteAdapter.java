@@ -74,6 +74,7 @@ public class VoteAdapter extends RecyclerView.Adapter<VoteAdapter.VoteViewHolder
                     String result = new CustomTask().execute(vote_list.get(position).getSchedule_id(),"yes","voteDate").get();
                     if(result.equals("revote")) {
                         String init = new CustomTask().execute(vote_list.get(position).getSchedule_id(),"initVoteDate").get();
+                        String re = new CustomTask().execute(vote_list.get(position).getSchedule_id(),null,"setDate").get();
                         //String reset = new CustomTask().execute()
                     }
                 } catch (ExecutionException e) {
