@@ -34,26 +34,15 @@
         android:layout_height="0dp"
         android:layout_weight="9">
 
-        <EditText
-            android:id="@+id/search_position_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="49dp"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:hint="검색"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/search_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="6dp"
             android:layout_marginTop="49dp"
             android:text="검색"
-            app:layout_constraintStart_toEndOf="@+id/search_position_text"
+
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
@@ -68,6 +57,29 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/search_btn"
             app:layout_constraintVertical_bias="1.0" />
+        <TextView
+            android:id="@+id/locationText"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="49dp"
+            android:hint="위치"
+            android:text="위치"
+            android:textAllCaps="false"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toStartOf="@+id/search_btn"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <WebView
+            android:id="@+id/locationWebView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="4"
+            app:layout_constraintBottom_toTopOf="@+id/select_btn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/search_btn" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </LinearLayout>
