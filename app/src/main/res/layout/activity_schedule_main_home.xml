@@ -42,13 +42,26 @@
                 android:layout_height="match_parent">
 
                 <TextView
+                    android:id="@+id/person"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="       참여자"
+                    android:layout_marginStart="30dp"
+                    android:text="참여자"
                     android:textSize="14sp"
                     app:layout_constraintBottom_toTopOf="@+id/add_person_btn"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/personName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+                    android:hint="참여자 목록"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toTopOf="@+id/add_person_btn"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/person" />
 
                 <Button
                     android:id="@+id/add_person_btn"

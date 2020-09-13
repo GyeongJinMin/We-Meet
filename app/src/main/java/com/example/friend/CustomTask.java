@@ -27,11 +27,11 @@ class CustomTask extends AsyncTask<String, Void, String> {
         try {
             String str;
             //URL url = new URL("http://172.30.1.18:8080/server/DBserver.jsp"); //수연
-            URL url = new URL("http://172.30.1.29:8080/project_Server/DB.jsp"); //규영
+            URL url = new URL("http://192.168.0.7:8080/project_Server/DB.jsp"); //규영
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
             conn.setRequestMethod("POST");
-            
+
             OutputStreamWriter osw = new OutputStreamWriter(conn.getOutputStream());
 
             if(sendMsg.equals("loadUser")||sendMsg.equals("loadFriends")) {
@@ -46,6 +46,10 @@ class CustomTask extends AsyncTask<String, Void, String> {
             else if (sendMsg.equals("join") ) {
                 sendMsg = "id="+strings[0]+"&pwd="+strings[1]+"&name="+strings[2]+"&type="+strings[3]+"&latitude="+strings[4]+"&longitude="+strings[5];
             }
+            else if (sendMsg.equals("savePoint")) {
+                //sche_id, mapPointx, mapPointy, placename, sendMsg
+                sendMsg = "sche_id="+strings[0]+"&latitude="+strings[1]+"&longitude="+strings[2]+"&location="+strings[3]+"&type=" + strings[4];
+            }
             else if(strings.length==1){ //load All Schedule
                 sendMsg = "type="+strings[0];
             }
@@ -55,6 +59,8 @@ class CustomTask extends AsyncTask<String, Void, String> {
                 if(strings[1].equals("initVoteLocation"))
                     sendMsg = "sche_id="+strings[0]+"&type="+strings[1];
                 if(strings[1].equals("initVoteDate"))
+                    sendMsg = "sche_id="+strings[0]+"&type="+strings[1];
+                if(strings[1].equals("loadPosition"))
                     sendMsg = "sche_id="+strings[0]+"&type="+strings[1];
             }
             else if(strings.length==3){ //add Schedule
@@ -80,16 +86,22 @@ class CustomTask extends AsyncTask<String, Void, String> {
                     sendMsg = "sche_id="+strings[0]+"&sign="+strings[1]+"&type="+strings[2];
             }
             else if (strings.length <5) {
-                sendMsg = "id="+strings[0]+"&pwd="+strings[1]+"&name="+strings[2]+"&type="+strings[3];
+                if(strings[3].equals("login"))
+                    sendMsg = "id="+strings[0]+"&pwd="+strings[1]+"&name="+strings[2]+"&type="+strings[3];
             }
 
             else if (strings.length <6) {
-                sendMsg = "id=" + strings[0] + "&date=" + strings[1] + "&schedule=" + strings[2] +
-                        "&memo=" + strings[3] + "&type=" + strings[4];
+                if(strings[4].equals("calendar_add"))
+                    sendMsg = "id=" + strings[0] + "&date=" + strings[1] + "&schedule=" + strings[2] +
+                            "&memo=" + strings[3] + "&type=" + strings[4];
+                else if(strings[4].equals("calendar_main"))
+                    sendMsg = "id=" + strings[0] + "&date=" + strings[1] + "&schedule=" + strings[2] +
+                            "&memo=" + strings[3] + "&type=" + strings[4];
             }
             else  {
-                sendMsg = "id=" + strings[0] + "&date=" + strings[1] + "&schedule=" + strings[2] +
-                        "&memo=" + strings[3] + "&old=" + strings[4] + "&type=" + strings[5];
+                if(strings[5].equals("calendar_edit"))
+                    sendMsg = "id=" + strings[0] + "&date=" + strings[1] + "&schedule=" + strings[2] +
+                            "&memo=" + strings[3] + "&old=" + strings[4] + "&type=" + strings[5];
             }
             osw.write(sendMsg);
             osw.flush();

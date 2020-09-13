@@ -60,7 +60,7 @@ public class SetLocationAddress extends AppCompatActivity {
         webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
         webView.addJavascriptInterface(new SetLocationAddress.AndroidBridge(), "TestApp");
 
-        webView.loadUrl("http://172.30.1.29:8080/project_Server/address.jsp");
+        webView.loadUrl("http://192.168.0.4:8080/server/address.jsp"); // 수연
 
     }
 
@@ -81,4 +81,3 @@ public class SetLocationAddress extends AppCompatActivity {
     }
 
 }
-

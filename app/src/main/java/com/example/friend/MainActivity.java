@@ -11,6 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.SimpleItemAnimator;
 
 import com.example.friend.databinding.ActivityMainBinding;
 
@@ -47,8 +49,6 @@ public class MainActivity extends Fragment {
                 startActivity(intent);
             }
         });
-
-
 
         return activityMainBinding.getRoot();
     }
@@ -110,6 +110,12 @@ public class MainActivity extends Fragment {
         activityMainBinding.rvProfile.setAdapter(adapter);
         activityMainBinding.rvProfile.setLayoutManager(new LinearLayoutManager(getContext()));
         activityMainBinding.rvProfile.setHasFixedSize(true);
+
+        RecyclerView.ItemAnimator animator = activityMainBinding.rvProfile.getItemAnimator();
+        if (animator instanceof SimpleItemAnimator) {
+            ((SimpleItemAnimator) animator).setSupportsChangeAnimations(false);
+        }
+
         adapter.notifyDataSetChanged(); // adapter 갱신
     }
 

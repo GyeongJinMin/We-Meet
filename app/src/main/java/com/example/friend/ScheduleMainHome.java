@@ -21,6 +21,7 @@ public class ScheduleMainHome extends AppCompatActivity {
     private String date;
     private String location;
     private String inform;
+    private String participants, person;
     private String[] schedule;
 
     @Override
@@ -36,6 +37,9 @@ public class ScheduleMainHome extends AppCompatActivity {
             if (requestCode == 2) {
                 location = data.getStringExtra("Location");
             }
+            if (requestCode == 3) {
+                person = data.getStringExtra("Participants");
+            }
 
             if (date != null && location != null)
                 inform = date + "\n" + location;
@@ -46,7 +50,13 @@ public class ScheduleMainHome extends AppCompatActivity {
                     inform = location;
             }
 
+            if(participants != null)
+                participants += person;
+            else
+                participants = person;
+
             activityScheduleMainHomeBinding.informBtn.setText(inform);
+            activityScheduleMainHomeBinding.personName.setText(participants);
 
         }
     }
@@ -76,6 +86,8 @@ public class ScheduleMainHome extends AppCompatActivity {
                     date = schedule[1];
                 if (!schedule[2].equals("null"))
                     location = schedule[2];
+                if(!schedule[3].equals("null"))
+                    participants = schedule[3];
 
                 if (date == null && location == null)
                     inform = "약속정보";
@@ -88,6 +100,7 @@ public class ScheduleMainHome extends AppCompatActivity {
                         inform = location;
                 }
                 activityScheduleMainHomeBinding.informBtn.setText(inform);
+                activityScheduleMainHomeBinding.personName.setText(participants);
 
             }
         } catch (ExecutionException e) {
@@ -95,6 +108,16 @@ public class ScheduleMainHome extends AppCompatActivity {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
+        activityScheduleMainHomeBinding.addPersonBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), SetParticipants.class);
+                intent.putExtra("sche_id",schedule_id);
+                intent.putExtra("message","addPerson");
+                startActivityForResult(intent, 3);
+            }
+        });
 
         activityScheduleMainHomeBinding.setScheduleBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -127,6 +150,7 @@ public class ScheduleMainHome extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), InformLocation.class);
+                intent.putExtra("sche_id",schedule_id);
                 startActivity(intent);
             }
         });

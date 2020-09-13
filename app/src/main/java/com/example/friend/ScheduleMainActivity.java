@@ -1,5 +1,6 @@
 package com.example.friend;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -15,6 +16,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -38,6 +40,19 @@ public class ScheduleMainActivity extends Fragment {
     private String[] schedule_list;
     private String id;
     private String sche_id;
+    private String participants;
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(resultCode != Activity.RESULT_CANCELED) {
+            if (requestCode == 3) {
+                participants = data.getStringExtra("Participants");
+            }
+        }
+
+    }
 
     @Nullable
     @Override
@@ -104,16 +119,38 @@ public class ScheduleMainActivity extends Fragment {
 
                 final Button finish_btn = (Button) view.findViewById(R.id.finish_btn);
                 final EditText edit_schedule_name = (EditText) view.findViewById(R.id.edit_schedule_name);
-                // 참여자 받아오기 필요
+                final TextView text_participants_name = (TextView) view.findViewById(R.id.participant);
+                final Button add_person_btn = (Button) view.findViewById(R.id.add_person_btn);
 
                 final AlertDialog dialog = builder.create();
+
+                add_person_btn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(getContext(), SetParticipants.class);
+                        intent.putExtra("sche_id", "newSchedule");
+                        intent.putExtra("message", "newSchedule");
+                        startActivityForResult(intent, 3);
+
+                        try {
+                            String result = new CustomTask().execute(sche_id, "loadParticipants").get();
+                            if(!result.equals("null")) {
+                                text_participants_name.setText(result);
+                            }
+                        } catch (ExecutionException e) {
+                            e.printStackTrace();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
 
                 finish_btn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         String schedule_name = edit_schedule_name.getText().toString();
                         try {
-                            String result = new CustomTask().execute(id, schedule_name, "addSche").get();
+                            String result = new CustomTask().execute(id, schedule_name, participants, "addSche").get();
                             sche_id = result;
                             String vote_add = new CustomTask().execute(sche_id, schedule_name,"addVote").get();
 
