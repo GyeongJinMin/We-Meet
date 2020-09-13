@@ -101,7 +101,8 @@ public class AddressWebview extends AppCompatActivity {
         mWebView.addJavascriptInterface(new AndroidBridge(), "TestApp");
 
 
-        mWebView.loadUrl("http://172.30.1.18:8080/server/address.jsp");
+        //mWebView.loadUrl("http://172.30.1.18:8080/server/address.jsp");
+        mWebView.loadUrl("http://172.30.1.29:8080/project_Server/address.jsp");
 
     }
     private class AndroidBridge {

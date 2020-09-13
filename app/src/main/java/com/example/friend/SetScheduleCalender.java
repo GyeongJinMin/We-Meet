@@ -64,6 +64,8 @@ public class SetScheduleCalender extends AppCompatActivity {
 
                         try {
                             String result = new CustomTask().execute(sche_id, date, "setDate").get();
+                            String res_vote = new CustomTask().execute(sche_id, date, "setVoteDate").get();
+                            String init = new CustomTask().execute(sche_id,"initVoteDate").get();
                             //Log.i("sche_date",date);
 
 //                            if(result.equals("done"))
@@ -91,13 +93,11 @@ public class SetScheduleCalender extends AppCompatActivity {
     /*public void OnClickHandler(View view) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("일정 선택").setMessage("이 날로 하시겠습니까?");
-
         builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
             }
         });
-
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -106,10 +106,8 @@ public class SetScheduleCalender extends AppCompatActivity {
                 intent.putExtra("Date", date);
                 Log.i("date", "setDate = " + date);
                 finish();
-
             }
         });
-
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
     }*/
