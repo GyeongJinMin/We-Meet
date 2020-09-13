@@ -26,6 +26,12 @@ public class SetLocationAddress extends AppCompatActivity {
         setContentView(R.layout.activity_set_location_address);
         result = (TextView) findViewById(R.id.locationPickResult);
         okButton = (Button) findViewById(R.id.locationPickButton);
+        webView = (WebView)findViewById(R.id.locationPickWebView);
+        //웹뷰 초기화
+        init_webView();
+        // 핸들러를 통한 JavaScript 이벤트 반응
+        handler = new Handler();
+
         okButton.setOnClickListener(new Button.OnClickListener(){
 
             @Override
@@ -34,24 +40,19 @@ public class SetLocationAddress extends AppCompatActivity {
                 pickAddress = result.getText().toString();
                 System.out.println(pickAddress);
                 intentback.putExtra("pickAddress", pickAddress);
-
-                //사용자에게 입력받은값 넣기
                 setResult(RESULT_OK,intentback); //결과를 저장
                 finish();
             }
         });
 
-        //웹뷰 초기화
-        init_webView();
-        // 핸들러를 통한 JavaScript 이벤트 반응
-        handler = new Handler();
+
     }
 
 
 
     public void init_webView() {
         // WebView 설정
-        webView = (WebView)findViewById(R.id.locationPickWebView);
+
         webView.setWebViewClient(new WebViewClient());
         webView.getSettings().setJavaScriptEnabled(true);
         webSettings = webView.getSettings();
@@ -59,9 +60,8 @@ public class SetLocationAddress extends AppCompatActivity {
         webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
         webView.addJavascriptInterface(new SetLocationAddress.AndroidBridge(), "TestApp");
 
-
-        //webView.loadUrl("http://172.30.1.18:8080/server/address.jsp");
         webView.loadUrl("http://172.30.1.29:8080/project_Server/address.jsp");
+
     }
 
 
@@ -81,3 +81,4 @@ public class SetLocationAddress extends AppCompatActivity {
     }
 
 }
+

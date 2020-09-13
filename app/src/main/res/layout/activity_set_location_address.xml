@@ -3,28 +3,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_weight="1"
     android:orientation="vertical"
     tools:context="com.example.friend.SetLocationAddress">
 
     <WebView
         android:id="@+id/locationPickWebView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_weight="4" />
-
     <TextView
         android:id="@+id/locationPickResult"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_weight="1"
         android:gravity="center"
-        android:text="검색 안함" />
+        android:text="Result" />
 
     <Button
         android:id="@+id/locationPickButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Button" />
-
+        android:hint="확인"
+        android:text="addressOK" />
 </LinearLayout>
