@@ -104,8 +104,8 @@ public class SetLocationCenter extends AppCompatActivity {
         mWebView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
         mWebView.addJavascriptInterface(new AndroidBridge(), "sendMessage");
         //mWebView.loadUrl("http://172.30.1.29:8080/project_Server/kakaomap.jsp");
-        //mWebView.loadUrl("http://172.30.1.29:8080/server/kakaomap.jsp");
-        mWebView.loadUrl("http://192.168.123.105:8080/server/kakaomap.jsp");
+        mWebView.loadUrl("http://192.168.0.4:8080/server/kakaomap.jsp"); // 수연
+        //mWebView.loadUrl("http://192.168.123.105:8080/server/kakaomap.jsp");
     }
 
     public class AndroidBridge {

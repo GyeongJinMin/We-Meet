@@ -150,6 +150,7 @@ public class ScheduleMainHome extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), InformLocation.class);
+                intent.putExtra("sche_id",schedule_id);
                 startActivity(intent);
             }
         });
