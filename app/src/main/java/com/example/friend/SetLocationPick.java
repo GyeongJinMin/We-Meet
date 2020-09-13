@@ -72,6 +72,8 @@ public class SetLocationPick extends AppCompatActivity {
 
                         try {
                             String result = new CustomTask().execute(sche_id, location, "setLocation").get();
+                            String res_vote = new CustomTask().execute(sche_id, location, "setVoteLocation").get();
+                            String init = new CustomTask().execute(sche_id,"initVoteLocation").get();
 
 //                            if(result.equals("done"))
 //                                Toast.makeText(SetLocationPick.this,"success",Toast.LENGTH_SHORT).show();
@@ -165,7 +167,8 @@ public class SetLocationPick extends AppCompatActivity {
         });
 
         // webview url load. php 파일 주소
-        webView.loadUrl("http://172.30.1.18:8080/server/locationPickWebView.jsp");
+        //webView.loadUrl("http://172.30.1.18:8080/server/locationPickWebView.jsp");
+        webView.loadUrl("http://172.30.1.29:8080/project_Server/locationPickWebView.jsp");
     }
 
 

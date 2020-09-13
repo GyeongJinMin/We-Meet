@@ -11,40 +11,81 @@ import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.friend.databinding.ActivitySetLocationCenterBinding;
+
+import java.util.concurrent.ExecutionException;
 
 
 public class SetLocationCenter extends AppCompatActivity {
     private WebView mWebView;
+    private ActivitySetLocationCenterBinding activitySetLocationCenterBinding;
     private WebSettings mWebSettings;
     private Handler handler;
     private Button btn_calc, btn_pick;
     private double mapPointx = 0, mapPointy = 0;
     private String name = "aa";
+    private String location;
+    private String sche_id;
+
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode==0)
+            location = data.getStringExtra("Location");
+
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_set_location_center);
-        btn_calc = (Button)findViewById(R.id.calc_btn);
-        btn_pick = (Button)findViewById(R.id.pick_location_btn);
+        activitySetLocationCenterBinding = ActivitySetLocationCenterBinding.inflate(getLayoutInflater());
+        setContentView(activitySetLocationCenterBinding.getRoot());
+
+        Intent getSchdule = getIntent();
+        sche_id = getSchdule.getStringExtra("sche_id");
+
         init_webView();
         handler = new Handler();
 
-        btn_calc.setOnClickListener(new View.OnClickListener() {
+        activitySetLocationCenterBinding.calcBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent returnMain = new Intent();
                 Intent intent = new Intent(getApplicationContext(), CalcLocation.class);
 
                 intent.putExtra("placename", name);
                 intent.putExtra("mapPointx", mapPointx);
                 intent.putExtra("mapPointy", mapPointy);
-                startActivity(intent);
+                startActivityForResult(intent,0);
+                returnMain.putExtra("Location",location);
+                setResult(2, returnMain);
+
+                try {
+                    String result = new CustomTask().execute(sche_id, location, "setLocation").get();
+                    String res_vote = new CustomTask().execute(sche_id, location, "setVoteLocation").get();
+                    String init = new CustomTask().execute(sche_id,"initVoteLocation").get();
+
+
+//                    if(result.equals("done"))
+//                        Toast.makeText(SetLocationCenter.this,"success",Toast.LENGTH_SHORT).show();
+//                    else
+//                        Toast.makeText(SetLocationCenter.this,"fail",Toast.LENGTH_SHORT).show();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                //startActivity(intent);
                 finish();
             }
         });
 
-        btn_pick.setOnClickListener(new View.OnClickListener() {
+        activitySetLocationCenterBinding.pickLocationBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
@@ -62,8 +103,8 @@ public class SetLocationCenter extends AppCompatActivity {
         mWebSettings.setJavaScriptEnabled(true);
         mWebView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
         mWebView.addJavascriptInterface(new AndroidBridge(), "sendMessage");
-        //mWebView.loadUrl("http://172.30.1.29:8080/project_Server/kakaomap.jsp");
-        mWebView.loadUrl("http://172.30.1.18:8080/server/kakaomap.jsp");
+        mWebView.loadUrl("http://172.30.1.29:8080/project_Server/kakaomap.jsp");
+        //mWebView.loadUrl("http://172.30.1.29:8080/server/kakaomap.jsp");
     }
 
     public class AndroidBridge {
