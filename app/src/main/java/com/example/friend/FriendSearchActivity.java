@@ -2,6 +2,8 @@ package com.example.friend;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.SimpleItemAnimator;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -32,8 +34,6 @@ public class FriendSearchActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityFriendSearchBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
-        mShowSearch();
     }
 
     public void mShowSearch() { // 검색 결과 보여주기
@@ -46,6 +46,11 @@ public class FriendSearchActivity extends AppCompatActivity {
         binding.rvSearch.setAdapter(adapter);
         binding.rvSearch.setLayoutManager(new LinearLayoutManager(this));
         binding.rvSearch.setHasFixedSize(true);
+
+        RecyclerView.ItemAnimator animator = binding.rvSearch.getItemAnimator();
+        if (animator instanceof SimpleItemAnimator) {
+            ((SimpleItemAnimator) animator).setSupportsChangeAnimations(false);
+        }
 
         binding.etSearch.addTextChangedListener(new TextWatcher() {
             @Override
@@ -136,5 +141,11 @@ public class FriendSearchActivity extends AppCompatActivity {
 
         // 사전순 정렬
         Collections.sort(mSearches);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mShowSearch();
     }
 }

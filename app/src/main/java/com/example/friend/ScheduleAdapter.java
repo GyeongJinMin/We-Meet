@@ -1,6 +1,7 @@
 package com.example.friend;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.util.Log;
@@ -32,6 +33,7 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.Schedu
     private ArrayList<Schedule> schedule_list;
     private Context context;
 
+    private String participants;
 
     public class ScheduleViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener {
         protected TextView name;
@@ -71,7 +73,8 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.Schedu
 
                         final Button finish_btn = (Button) view.findViewById(R.id.finish_btn);
                         final EditText edit_schedule_name = (EditText) view.findViewById(R.id.edit_schedule_name);
-                        // 참여자 받아오기 필요
+                        final TextView text_participants_name = (TextView) view.findViewById(R.id.participant);
+                        final Button add_person_btn = (Button) view.findViewById(R.id.add_person_btn);
 
                         String sche_id = schedule_list.get(getAdapterPosition()).getSche_id();
                         edit_schedule_name.setText(schedule_list.get(getAdapterPosition()).getSche_name());
@@ -79,6 +82,27 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.Schedu
                         final AlertDialog dialog = builder.create();
 
                         final String finalSche_id = sche_id;
+
+                        try {
+                            String result = new CustomTask().execute(finalSche_id, "loadParticipants").get();
+                            if(!result.equals("null")) {
+                                text_participants_name.setText(result);
+                            }
+                        } catch (ExecutionException e) {
+                            e.printStackTrace();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+
+                        add_person_btn.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent intent = new Intent(context, SetParticipants.class);
+                                intent.putExtra("sche_id",finalSche_id);
+                                intent.putExtra("message","addPerson");
+                                context.startActivity(intent);
+                            }
+                        });
 
                         finish_btn.setOnClickListener(new View.OnClickListener() {
                             @Override
