@@ -22,9 +22,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".VoteLocationActivity"></activity>
+        <activity android:name=".SetParticipants"></activity>
+        <activity android:name=".VoteLocationActivity" />
         <activity android:name=".VoteActivity" />
-        <activity android:name=".SetLocationAddress"></activity>
+        <activity android:name=".SetLocationAddress" />
         <activity android:name=".AddressWebview" />
         <activity android:name=".JoinActivity" /> <!-- <uses-library -->
         <!-- android:name="com.google.android.wearable" -->

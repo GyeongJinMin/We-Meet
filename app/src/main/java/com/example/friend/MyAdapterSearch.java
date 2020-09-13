@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.friend.databinding.ItemListBinding;
@@ -17,6 +18,7 @@ import com.example.friend.databinding.ItemSearchBinding;
 import java.io.File;
 import java.io.FileInputStream;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 class MySearchHolder extends RecyclerView.ViewHolder {
@@ -35,10 +37,11 @@ public class MyAdapterSearch extends RecyclerView.Adapter {
     private Context context;
 
     private static final int MY = -1;
-    private static final int FRIEND = -2;
+    private static final int OTHER = -2;
 
-    private String[] friends;
+    private String[] others;
     private String id, sendMsg, userName;
+    private ItemListBinding listBinding;
 
     MyAdapterSearch(ArrayList<Profile> profiles, Context context) {
         mProfiles = profiles;
@@ -53,29 +56,27 @@ public class MyAdapterSearch extends RecyclerView.Adapter {
 
         RecyclerView.ViewHolder holder;
 
-        if( viewType == MY || viewType == FRIEND ) { // 본인 또는 친구
-            ItemListBinding listBinding = ItemListBinding.inflate(LayoutInflater.from(context), parent, false);
-            holder = new MyListHolder(listBinding);
-        } else { // 친구가 아닐 때
+        if(viewType == OTHER && viewType != MY) { // 본인 또는 친구가 아닐 때
             ItemSearchBinding searchBinding = ItemSearchBinding.inflate(LayoutInflater.from(context), parent, false);
             holder = new MySearchHolder(searchBinding);
+        } else {
+            listBinding = ItemListBinding.inflate(LayoutInflater.from(context), parent, false);
+            holder = new MyListHolder(listBinding);
         }
 
         return holder;
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
         if(holder instanceof MyListHolder) { // instanceof는 형변환 가능 여부.
             MyListHolder mHolder = (MyListHolder) holder;
-            mHolder.mBinding.image.setBackgroundResource(mProfiles.get(position).getIcon());
-            // mHolder.mBinding.image.setImageResource(mProfiles.get(position).getIcon());
+            //mHolder.mBinding.image.setBackgroundResource(mProfiles.get(position).getIcon());
             mHolder.mBinding.name.setText(mProfiles.get(position).getName());
         }
         else {
             MySearchHolder mHolder = (MySearchHolder) holder;
-            mHolder.mBinding.image.setBackgroundResource(mProfiles.get(position).getIcon());
-            // mHolder.mBinding.image.setImageResource(mProfiles.get(position).getIcon());
+            //mHolder.mBinding.image.setBackgroundResource(mProfiles.get(position).getIcon());
             mHolder.mBinding.name.setText(mProfiles.get(position).getName());
 
             mHolder.mBinding.btnRequest.setTag(holder.getAdapterPosition());
@@ -91,10 +92,23 @@ public class MyAdapterSearch extends RecyclerView.Adapter {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             // 친구에게 신청알림 보내기
-                            // 요청하기 버튼 지우기..?
-                            Toast.makeText(context, "요청", Toast.LENGTH_SHORT).show();
                             int pos = (int) v.getTag();
-                            // mProfiles.remove(pos); // 전체사용자 리스트. 아이템 삭제..?
+                            String friendName = mProfiles.get(pos).getName();
+                            try {
+                                sendMsg = "friendRequest";
+                                String result = new CustomTask(sendMsg).execute(id, friendName, "friendRequest").get();
+                                // 상대방 친구 테이블에 나를 status 0으로 추가
+                                // 내 친구 테이블에 상대방을 status 0으로 추가
+                                if(result.equals("true")) {
+                                    Toast.makeText(context, "요청", Toast.LENGTH_SHORT).show();
+                                    mProfiles.get(pos).setName(friendName+" "); // 변경됨
+                                    notifyDataSetChanged();
+                                }
+                            } catch (ExecutionException e) {
+                                e.printStackTrace();
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
                         }
                     });
                     builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
@@ -105,8 +119,6 @@ public class MyAdapterSearch extends RecyclerView.Adapter {
                         }
                     });
                     builder.create().show();
-
-                    notifyDataSetChanged(); // 갱신
                 }
             });
         }
@@ -118,11 +130,12 @@ public class MyAdapterSearch extends RecyclerView.Adapter {
             return MY;
         }
         else {
-            for(int i=0; i< friends.length; i++) {
-                if(mProfiles.get(position).getName().equals(friends[i])) // 이미 친구인 경우
-                    return FRIEND;
+            for (int i = 0; i < others.length; i++) {
+                if (mProfiles.get(position).getName().equals(others[i])) // 다른 사용자
+                    return OTHER;
             }
         }
+
         return position;
     }
 
@@ -131,9 +144,10 @@ public class MyAdapterSearch extends RecyclerView.Adapter {
             sendMsg = "loadUser";
             userName = new CustomTask(sendMsg).execute(id, "loadUser").get();
 
-            sendMsg = "loadFriends";
-            String result = new CustomTask(sendMsg).execute(id, "loadFriends").get();
-            friends = result.split("\t");
+            sendMsg = "loadOthers";
+            String result = new CustomTask(sendMsg).execute(id, "loadOthers").get();
+            others = result.split("\t");
+
         } catch (ExecutionException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {

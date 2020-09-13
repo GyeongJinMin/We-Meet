@@ -14,9 +14,21 @@ import java.util.List;
 class Profile implements Comparable {
     int mIcon;
     String mName;
+    private boolean isSelected;
+
+    Profile(String name) {
+        this.mName = name;
+    }
+
     Profile(int icon, String name) {
         this.mIcon = icon;
         this.mName = name;
+    }
+
+    Profile(int icon, String name, boolean isSelected) {
+        this.mIcon = icon;
+        this.mName = name;
+        this.isSelected = isSelected;
     }
 
     @Override
@@ -30,6 +42,13 @@ class Profile implements Comparable {
 
     public void setName(String name) { this.mName = name; }
     public String getName() { return mName; }
+
+    public boolean isSelected() {
+        return isSelected;
+    }
+    public void setSelected(boolean isSelected) {
+        this.isSelected = isSelected;
+    }
 }
 
 class MyHeaderHolder extends RecyclerView.ViewHolder {
@@ -97,13 +116,13 @@ public class MyAdapter extends RecyclerView.Adapter {
         }
         else if (position == MY_PROFILE && holder instanceof MyListHolder) {
             MyListHolder mHolder = (MyListHolder) holder;
-            mHolder.mBinding.image.setBackgroundResource(mProfiles.get(position).getIcon());
+            //mHolder.mBinding.image.setBackgroundResource(mProfiles.get(position).getIcon());
             // mHolder.mBinding.image.setImageResource(mProfiles.get(position).getIcon());
             mHolder.mBinding.name.setText(mProfiles.get(position).getName());
         }
         else {
             MyListHolder mHolder = (MyListHolder) holder;
-            mHolder.mBinding.image.setBackgroundResource(mProfiles.get(position).getIcon());
+            //mHolder.mBinding.image.setBackgroundResource(mProfiles.get(position).getIcon());
             // mHolder.mBinding.image.setImageResource(mProfiles.get(position).getIcon());
             mHolder.mBinding.name.setText(mProfiles.get(position).getName());
         }
