@@ -73,6 +73,7 @@ public class SetLocationPick extends AppCompatActivity {
 
                         try {
                             String result = new CustomTask().execute(sche_id, location, "setLocation").get();
+                            String res_vote = new CustomTask().execute(sche_id, location, "setVoteLocation").get();
 
 //                            if(result.equals("done"))
 //                                Toast.makeText(SetLocationPick.this,"success",Toast.LENGTH_SHORT).show();

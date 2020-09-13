@@ -26,7 +26,8 @@ class CustomTask extends AsyncTask<String, Void, String> {
     protected String doInBackground(String... strings) {
         try {
             String str;
-            URL url = new URL("http://192.168.0.4:8080/server/DBserver.jsp"); //수연
+            //URL url = new URL("http://192.168.0.4:8080/server/DBserver.jsp"); //수연
+            URL url = new URL("http://192.168.43.187:8080/server/DBserver.jsp");
             //URL url = new URL("http://192.168.0.7:8080/project_Server/DB.jsp"); //규영
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
@@ -43,11 +44,16 @@ class CustomTask extends AsyncTask<String, Void, String> {
             else if(sendMsg.equals("addFriend")) {
                 sendMsg = "id=" + strings[0] + "&friendName=" + strings[1] + "&type=" + strings[2];
             }
-            else if(strings.length==1){ //load All Schedule
+            else if(strings.length==1){ //load All Schedule, loadVote
                 sendMsg = "type="+strings[0];
             }
             else if(strings.length==2) { //load Schedule
-                sendMsg = "sche_id="+strings[0]+"&type="+strings[1];
+                if(strings[1].equals("loadSche"))
+                    sendMsg = "sche_id="+strings[0]+"&type="+strings[1];
+                if(strings[1].equals("initVoteLocation"))
+                    sendMsg = "sche_id="+strings[0]+"&type="+strings[1];
+                if(strings[1].equals("initVoteDate"))
+                    sendMsg = "sche_id="+strings[0]+"&type="+strings[1];
             }
             else if(strings.length==3){ //add Schedule
                 if(strings[2].equals("addSche"))
@@ -58,6 +64,18 @@ class CustomTask extends AsyncTask<String, Void, String> {
                     sendMsg = "sche_id="+strings[0]+"&location="+strings[1]+"&type="+strings[2];
                 if(strings[2].equals("modiSche"))
                     sendMsg = "sche_id="+strings[0]+"&new_sche_name="+strings[1]+"&type="+strings[2];
+                if(strings[2].equals("addVote"))
+                    sendMsg = "sche_id="+strings[0]+"&sche_name="+strings[1]+"&type="+strings[2];
+                if(strings[2].equals("modiVote"))
+                    sendMsg = "sche_id="+strings[0]+"&sche_name="+strings[1]+"&type="+strings[2];
+                if(strings[2].equals("setVoteDate"))
+                    sendMsg = "sche_id="+strings[0]+"&date="+strings[1]+"&type="+strings[2];
+                if(strings[2].equals("setVoteLocation"))
+                    sendMsg = "sche_id="+strings[0]+"&location="+strings[1]+"&type="+strings[2];
+                if(strings[2].equals("voteDate"))
+                    sendMsg = "sche_id="+strings[0]+"&sign="+strings[1]+"&type="+strings[2];
+                if(strings[2].equals("voteLocation"))
+                    sendMsg = "sche_id="+strings[0]+"&sign="+strings[1]+"&type="+strings[2];
             }
             else if (strings.length <5) {
                 sendMsg = "id="+strings[0]+"&pwd="+strings[1]+"&name="+strings[2]+"&type="+strings[3];

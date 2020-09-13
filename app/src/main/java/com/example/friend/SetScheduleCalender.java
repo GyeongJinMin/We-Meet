@@ -64,6 +64,7 @@ public class SetScheduleCalender extends AppCompatActivity {
 
                         try {
                             String result = new CustomTask().execute(sche_id, date, "setDate").get();
+                            String res_vote = new CustomTask().execute(sche_id, date, "setVoteDate").get();
                             //Log.i("sche_date",date);
 
 //                            if(result.equals("done"))

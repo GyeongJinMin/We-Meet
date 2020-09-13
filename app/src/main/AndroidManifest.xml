@@ -22,8 +22,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".JoinActivity"></activity>
-        <!-- <uses-library -->
+        <activity android:name=".VoteLocationActivity"></activity>
+        <activity android:name=".VoteActivity" />
+        <activity android:name=".JoinActivity" /> <!-- <uses-library -->
         <!-- android:name="com.google.android.wearable" -->
         <!-- android:required="true" /> -->
         <!--
@@ -36,7 +37,7 @@
 
         <activity
             android:name=".TabActivity"
-            android:label="@string/title_activity_tab"></activity>
+            android:label="@string/title_activity_tab" />
         <activity
             android:name=".LoginActivity"
             android:label="@string/title_activity_login">

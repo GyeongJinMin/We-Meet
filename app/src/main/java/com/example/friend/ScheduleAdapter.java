@@ -32,12 +32,22 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.Schedu
     private ArrayList<Schedule> schedule_list;
     private Context context;
 
+
     public class ScheduleViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener {
         protected TextView name;
+//        protected Button date_btn;
+//        protected Button location_btn;
+//        protected Button inform_btn;
 
         public ScheduleViewHolder(View v) {
             super(v);
             this.name = (TextView) v.findViewById(R.id.schedule_name);
+//            this.date_btn = (Button) v.findViewById(R.id.set_schedule_btn);
+//            this.location_btn = (Button) v.findViewById(R.id.set_location_btn);
+//
+//
+//            this.inform_btn = (Button) v.findViewById(R.id.inform_btn);
+//            //Log.i("btn",this.inform_btn.toString());
 
             v.setOnCreateContextMenuListener(this);
         }
@@ -82,6 +92,7 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.Schedu
 
                                 try {
                                     String result = new CustomTask().execute(finalSche_id, schedule_name, "modiSche").get();
+                                    String res = new CustomTask().execute(finalSche_id, schedule_name, "modiVote").get();
                                 } catch (ExecutionException e) {
                                     e.printStackTrace();
                                 } catch (InterruptedException e) {
@@ -146,8 +157,48 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.Schedu
 
     @Override
     public void onBindViewHolder(@NonNull ScheduleAdapter.ScheduleViewHolder holder, int position) {
+//        Log.i("holder","IN");
+//        String[] schedule = null;
+//        String date = null;
+//        String location = null;
+//        String inform = null;
+//        try {
+//            String result = new CustomTask().execute(schedule_list.get(position).getSche_id(), "loadSche").get();
+//
+//            if (result.getBytes().length > 0) {
+//                schedule = result.split("\t");
+//                for (int i = 0; i < 4; i++) {
+//                    Log.i("schedule", "schduel : " + i + schedule[i]);
+//                }
+//                if (!schedule[1].equals("null"))
+//                    date = schedule[1];
+//                if (!schedule[2].equals("null"))
+//                    location = schedule[2];
+//
+//                if (date == null && location == null)
+//                    inform = "약속정보";
+//                else if (date != null && location != null)
+//                    inform = date + "\n" + location;
+//                else {
+//                    if (location == null)
+//                        inform = date;
+//                    if (date == null)
+//                        inform = location;
+//                }
+//
+//            }
+//        } catch (ExecutionException e) {
+//            e.printStackTrace();
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
         holder.name.setTextSize(TypedValue.COMPLEX_UNIT_SP, 25);
         holder.name.setGravity(Gravity.LEFT);
         holder.name.setText(schedule_list.get(position).getSche_name());
+
+//        if (holder.inform_btn != null)
+//            holder.inform_btn.setText(inform);
+//        else
+//            Log.i("holder","NULL");
     }
 }

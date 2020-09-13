@@ -27,24 +27,28 @@ public class ScheduleMainHome extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == 1) {
-            date = data.getStringExtra("Date");
-        }
-        if (requestCode == 2) {
-            location = data.getStringExtra("Location");
-        }
+        //Log.i("request", Integer.toString(requestCode));
 
-        if (date != null && location != null)
-            inform = date + "\n" + location;
-        else {
-            if (location == null)
-                inform = date;
-            if (date == null)
-                inform = location;
+        if (resultCode != RESULT_CANCELED) {
+            if (requestCode == 1) {
+                date = data.getStringExtra("Date");
+            }
+            if (requestCode == 2) {
+                location = data.getStringExtra("Location");
+            }
+
+            if (date != null && location != null)
+                inform = date + "\n" + location;
+            else {
+                if (location == null)
+                    inform = date;
+                if (date == null)
+                    inform = location;
+            }
+
+            activityScheduleMainHomeBinding.informBtn.setText(inform);
+
         }
-
-        activityScheduleMainHomeBinding.infromBtn.setText(inform);
-
     }
 
     @Override
@@ -62,25 +66,28 @@ public class ScheduleMainHome extends AppCompatActivity {
 
             if (result.getBytes().length > 0) {
                 schedule = result.split("\t");
-
+                for(int i=0; i<4;i++)
+                {
+                    Log.i("schedule","schduel : " + i + schedule[i]);
+                }
                 schedule_name = schedule[0];
                 activityScheduleMainHomeBinding.scheduleName.setText(schedule_name);
-                if(!schedule[1].equals("null"))
+                if (!schedule[1].equals("null"))
                     date = schedule[1];
-                if(!schedule[2].equals("null"))
+                if (!schedule[2].equals("null"))
                     location = schedule[2];
 
-                if(date == null && location ==null)
+                if (date == null && location == null)
                     inform = "약속정보";
                 else if (date != null && location != null)
                     inform = date + "\n" + location;
-                else{
+                else {
                     if (location == null)
                         inform = date;
                     if (date == null)
                         inform = location;
                 }
-                activityScheduleMainHomeBinding.infromBtn.setText(inform);
+                activityScheduleMainHomeBinding.informBtn.setText(inform);
 
             }
         } catch (ExecutionException e) {
@@ -93,7 +100,7 @@ public class ScheduleMainHome extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), SetScheduleCalender.class);
-                intent.putExtra("sche_id",schedule_id);
+                intent.putExtra("sche_id", schedule_id);
                 startActivityForResult(intent, 1);
             }
         });
@@ -103,7 +110,7 @@ public class ScheduleMainHome extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), SetLocationPick.class);
-                intent.putExtra("sche_id",schedule_id);
+                intent.putExtra("sche_id", schedule_id);
                 startActivityForResult(intent, 2);
             }
         });
@@ -116,7 +123,7 @@ public class ScheduleMainHome extends AppCompatActivity {
             }
         });
 
-        activityScheduleMainHomeBinding.infromBtn.setOnClickListener(new View.OnClickListener() {
+        activityScheduleMainHomeBinding.informBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), InformLocation.class);

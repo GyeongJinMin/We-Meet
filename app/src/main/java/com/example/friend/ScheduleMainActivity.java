@@ -87,6 +87,14 @@ public class ScheduleMainActivity extends Fragment {
             }
         }));
 
+        activityScheduleMainBinding.voteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), VoteActivity.class);
+                startActivity(intent);
+            }
+        });
+
         activityScheduleMainBinding.addScheduleBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -107,6 +115,8 @@ public class ScheduleMainActivity extends Fragment {
                         try {
                             String result = new CustomTask().execute(id, schedule_name, "addSche").get();
                             sche_id = result;
+                            String vote_add = new CustomTask().execute(sche_id, schedule_name,"addVote").get();
+
                         } catch (ExecutionException e) {
                             e.printStackTrace();
                         } catch (InterruptedException e) {
