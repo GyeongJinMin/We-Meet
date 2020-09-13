@@ -136,26 +136,21 @@ public class ScheduleMainHome extends AppCompatActivity {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
         Intent getMainIntent = getActivity().getIntent();
         Intent intent = getIntent();
         String schedule_name = getMainIntent.getStringExtra("schedule_name");
         activityScheduleMainHomeBinding.scheduleName.setText(schedule_name);
-
-
         activityScheduleMainHomeBinding.setScheduleBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(),SetScheduleCalender.class);
                 startActivity(intent);
-
                 Intent getCalender = getActivity().getIntent();
                 date = getCalender.getStringExtra("Date");
                 activityScheduleMainHomeBinding.infromBtn.setText(date);
                 //finish();
             }
         });
-
         activityScheduleMainHomeBinding.setLocationBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -163,7 +158,6 @@ public class ScheduleMainHome extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
         activityScheduleMainHomeBinding.realTimePositionBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -171,7 +165,6 @@ public class ScheduleMainHome extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
         activityScheduleMainHomeBinding.infromBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -179,8 +172,6 @@ public class ScheduleMainHome extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-
         return activityScheduleMainHomeBinding.getRoot();
     }
     */

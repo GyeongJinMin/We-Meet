@@ -24,6 +24,8 @@
         android:usesCleartextTraffic="true">
         <activity android:name=".VoteLocationActivity"></activity>
         <activity android:name=".VoteActivity" />
+        <activity android:name=".SetLocationAddress"></activity>
+        <activity android:name=".AddressWebview" />
         <activity android:name=".JoinActivity" /> <!-- <uses-library -->
         <!-- android:name="com.google.android.wearable" -->
         <!-- android:required="true" /> -->
@@ -68,6 +70,9 @@
             tools:ignore="Instantiatable" />
         <activity
             android:name=".CalcLocation"
+            tools:ignore="Instantiatable" />
+        <activity
+            android:name=".CalcLocation_map"
             tools:ignore="Instantiatable" />
         <activity
             android:name=".MemberPosition"

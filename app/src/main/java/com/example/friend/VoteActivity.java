@@ -74,4 +74,3 @@ public class VoteActivity extends AppCompatActivity { // DateVote
 
 
 }
-

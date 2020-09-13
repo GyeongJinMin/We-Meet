@@ -26,9 +26,8 @@ class CustomTask extends AsyncTask<String, Void, String> {
     protected String doInBackground(String... strings) {
         try {
             String str;
-            //URL url = new URL("http://192.168.0.4:8080/server/DBserver.jsp"); //수연
-            URL url = new URL("http://192.168.43.187:8080/server/DBserver.jsp");
-            //URL url = new URL("http://192.168.0.7:8080/project_Server/DB.jsp"); //규영
+            //URL url = new URL("http://172.30.1.18:8080/server/DBserver.jsp"); //수연
+            URL url = new URL("http://172.30.1.29:8080/project_Server/DB.jsp"); //규영
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
             conn.setRequestMethod("POST");
@@ -44,7 +43,10 @@ class CustomTask extends AsyncTask<String, Void, String> {
             else if(sendMsg.equals("addFriend")) {
                 sendMsg = "id=" + strings[0] + "&friendName=" + strings[1] + "&type=" + strings[2];
             }
-            else if(strings.length==1){ //load All Schedule, loadVote
+            else if (sendMsg.equals("join") ) {
+                sendMsg = "id="+strings[0]+"&pwd="+strings[1]+"&name="+strings[2]+"&type="+strings[3]+"&latitude="+strings[4]+"&longitude="+strings[5];
+            }
+            else if(strings.length==1){ //load All Schedule
                 sendMsg = "type="+strings[0];
             }
             else if(strings.length==2) { //load Schedule
@@ -80,6 +82,7 @@ class CustomTask extends AsyncTask<String, Void, String> {
             else if (strings.length <5) {
                 sendMsg = "id="+strings[0]+"&pwd="+strings[1]+"&name="+strings[2]+"&type="+strings[3];
             }
+
             else if (strings.length <6) {
                 sendMsg = "id=" + strings[0] + "&date=" + strings[1] + "&schedule=" + strings[2] +
                         "&memo=" + strings[3] + "&type=" + strings[4];
