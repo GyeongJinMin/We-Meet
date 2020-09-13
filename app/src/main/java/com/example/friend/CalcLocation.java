@@ -12,15 +12,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.friend.databinding.ActivityCalcLocationBinding;
 
-import net.daum.mf.map.api.MapPoint;
-import net.daum.mf.map.api.MapView;
 
 public class CalcLocation extends AppCompatActivity {
 
     private ActivityCalcLocationBinding activityCalcLocationBinding;
     private double mapPointx;
     private double mapPointy;
-    private String placename;
+    private String location = "";
+    private String sche_id, saveDB,sendMsg;
 
 
     @Override
@@ -30,17 +29,16 @@ public class CalcLocation extends AppCompatActivity {
         activityCalcLocationBinding = ActivityCalcLocationBinding.inflate(getLayoutInflater());
         setContentView(activityCalcLocationBinding.getRoot());
 
-        //mapPoint[1] = MapPoint.mapPointWithGeoCoord(mapPointx,mapPointy);
-
         Intent intent = getIntent();
         mapPointx = intent.getDoubleExtra("mapPointx",0);
         mapPointy = intent.getDoubleExtra("mapPointy", 0);
-        placename = intent.getStringExtra("placename");
+        location = intent.getStringExtra("location");
+        sche_id = intent.getStringExtra("sche_id");
 
         Toast.makeText(getApplicationContext(),
-                mapPointx + ", " + mapPointy + "," + placename,  Toast.LENGTH_SHORT).show();
+                mapPointx + ", " + mapPointy + "," + location,  Toast.LENGTH_SHORT).show();
 
-        activityCalcLocationBinding.locationTextview.setText(placename);
+        activityCalcLocationBinding.locationTextview.setText(location);
 
         activityCalcLocationBinding.pickLocationBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,60 +96,16 @@ public class CalcLocation extends AppCompatActivity {
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Intent intent = new Intent(getApplicationContext(), ScheduleMainHome.class);
-                intent.putExtra("mapPointx", mapPointx);
-                intent.putExtra("mapPointy", mapPointy);
-                startActivity(intent);
+                try {
+                    sendMsg ="savePoint";
+                    saveDB = new CustomTask(sendMsg).execute(sche_id, Double.toString(mapPointx), Double.toString(mapPointy), location, sendMsg).get();
+                    Intent intent = new Intent(getApplicationContext(), ScheduleMainHome.class);
+                    startActivity(intent);
+                } catch (Exception e) { }
             }
         });
 
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
     }
-
-    /*
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        activityCalcLocationBinding = ActivityCalcLocationBinding.inflate(getLayoutInflater());
-        activityCalcLocationBinding.pickLocationBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getContext(), SetLocationPick.class);
-                startActivity(intent);
-                getActivity().finish();
-            }
-        });
-
-
-        return activityCalcLocationBinding.getRoot();
-    }
-
-
-
-    public void OnClickHandler (View view)
-    {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setTitle("장소 선택").setMessage("이 곳으로 하시겠습니까?");
-
-        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-            }
-        });
-
-        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Intent intent = new Intent(getContext(), ScheduleMainHome.class);
-                startActivity(intent);
-            }
-        });
-
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
-    }
-
-     */
 }
