@@ -29,7 +29,6 @@ import java.security.NoSuchAlgorithmException;
 public class Calendar_main extends Fragment {
     CalendarView mCalendar;
     CalendarMainBinding calendarMainBinding;
-    String id;
 
     public Calendar_main() {
 

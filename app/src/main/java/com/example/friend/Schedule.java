@@ -3,7 +3,7 @@ package com.example.friend;
 import java.sql.Date;
 
 public class Schedule {
-    private int sche_id;
+    private String sche_id;
     private String id;
     private String sche_name;
     private Date date;
@@ -18,7 +18,12 @@ public class Schedule {
         this.sche_name = sche_name;
     }
 
-    public Schedule(int sche_id, String id, String sche_name, Date date, String location, String participants) {
+    public Schedule(String sche_name, String sche_id) {
+        this.sche_name = sche_name;
+        this.sche_id = sche_id;
+    }
+
+    public Schedule(String sche_id, String id, String sche_name, Date date, String location, String participants) {
         this.sche_id = sche_id;
         this.id = id;
         this.sche_name = sche_name;
@@ -27,7 +32,7 @@ public class Schedule {
         this.participants = participants;
     }
 
-    public void setSche_id(int sche_id) {
+    public void setSche_id(String sche_id) {
         this.sche_id = sche_id;
     }
 
@@ -51,7 +56,7 @@ public class Schedule {
         this.participants = participants;
     }
 
-    public int getSche_id() {
+    public String getSche_id() {
         return this.sche_id;
     }
 

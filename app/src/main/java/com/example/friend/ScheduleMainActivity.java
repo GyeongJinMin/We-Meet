@@ -35,8 +35,9 @@ public class ScheduleMainActivity extends Fragment {
     private ActivityScheduleMainBinding activityScheduleMainBinding;
     private ArrayList<Schedule> schedules;
     private ScheduleAdapter scheduleAdapter;
-    String[] schedule_list;
+    private String[] schedule_list;
     private String id;
+    private String sche_id;
 
     @Nullable
     @Override
@@ -53,14 +54,13 @@ public class ScheduleMainActivity extends Fragment {
         readData(new File(getContext().getFilesDir(), "id.txt"));
 
         try {
-            String result = new CustomTask().execute("loadSche").get();
+            String result = new CustomTask().execute("loadAllSche").get();
             if (result.getBytes().length > 0) {
                 schedule_list = result.split("\t");
 
                 for (int i = 0; i < schedule_list.length; i = i + 2) { //나누기
-                    schedules.add(0, new Schedule(schedule_list[i]));
+                    schedules.add(0, new Schedule(schedule_list[i],schedule_list[i+1]));
                     scheduleAdapter.notifyItemInserted(0);
-                    //Log.i("sche","msg : "+ schedule_list[i].toString());
                 }
             }
         } catch (ExecutionException e) {
@@ -78,6 +78,7 @@ public class ScheduleMainActivity extends Fragment {
                 Schedule schedule = schedules.get(position);
                 Intent intent = new Intent(getContext(), ScheduleMainHome.class);
                 intent.putExtra("schedule_name", schedule.getSche_name());
+                intent.putExtra("schedule_id", schedule.getSche_id());
                 startActivity(intent);
             }
 
@@ -105,6 +106,7 @@ public class ScheduleMainActivity extends Fragment {
                         String schedule_name = edit_schedule_name.getText().toString();
                         try {
                             String result = new CustomTask().execute(id, schedule_name, "addSche").get();
+                            sche_id = result;
                         } catch (ExecutionException e) {
                             e.printStackTrace();
                         } catch (InterruptedException e) {
@@ -113,8 +115,12 @@ public class ScheduleMainActivity extends Fragment {
 
                         dialog.dismiss();
 
+                        schedules.add(0, new Schedule(schedule_name, sche_id));
+                        scheduleAdapter.notifyItemInserted(0);
+
                         Intent intent = new Intent(getContext(), ScheduleMainHome.class);
                         intent.putExtra("schedule_name", schedule_name);
+                        intent.putExtra("schedule_id",sche_id);
                         startActivity(intent);
                     }
                 });
