@@ -26,9 +26,9 @@ class CustomTask extends AsyncTask<String, Void, String> {
     protected String doInBackground(String... strings) {
         try {
             String str;
-            //URL url = new URL("http://172.30.1.18:8080/server/DBserver.jsp"); //수연
+            URL url = new URL("http://172.30.1.7:8080/server/DBserver.jsp"); //수연
             //URL url = new URL("http://172.30.1.29:8080/project_Server/DB.jsp"); //규영
-            URL url = new URL("http://172.30.1.12:8080/server/DBserver.jsp");// 경진
+            //URL url = new URL("http://172.30.1.12:8080/server/DBserver.jsp");// 경진
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
             conn.setRequestMethod("POST");
@@ -62,6 +62,8 @@ class CustomTask extends AsyncTask<String, Void, String> {
                 if(strings[1].equals("initVoteLocation"))
                     sendMsg = "sche_id="+strings[0]+"&type="+strings[1];
                 if(strings[1].equals("initVoteDate"))
+                    sendMsg = "sche_id="+strings[0]+"&type="+strings[1];
+                if(strings[1].equals("loadPosition"))
                     sendMsg = "sche_id="+strings[0]+"&type="+strings[1];
             }
             else if(strings.length==3){ //add Schedule
