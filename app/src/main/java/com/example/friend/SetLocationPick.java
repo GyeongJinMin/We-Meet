@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
@@ -29,7 +30,7 @@ public class SetLocationPick extends AppCompatActivity {
     private static final String ENTRY_URL = "file:///android_asset/www/index.html";
     private ActivitySetLocationPickBinding activitySetLocationPickBinding;
     private String location;
-    private String sche_id;
+    private String sche_id, saveDB,sendMsg;
     private TextView locationString;
     private Handler handler;
     private WebView webView;
@@ -76,14 +77,16 @@ public class SetLocationPick extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Intent intent = new Intent();
-                        intent.putExtra("Location", "여기");
-                        location = "여기";
-                        setResult(2, intent);
+                        intent.putExtra("Location",location);
+                        Log.i("location" ,"calc" + location);
+                        setResult(4, intent);
 
                         try {
                             String result = new CustomTask().execute(sche_id, location, "setLocation").get();
                             String res_vote = new CustomTask().execute(sche_id, location, "setVoteLocation").get();
                             String init = new CustomTask().execute(sche_id,"initVoteLocation").get();
+                            sendMsg ="savePoint";
+                            saveDB = new CustomTask(sendMsg).execute(sche_id, Double.toString(doubleLat), Double.toString(doubleLng), location, sendMsg).get();
 
 //                            if(result.equals("done"))
 //                                Toast.makeText(SetLocationPick.this,"success",Toast.LENGTH_SHORT).show();
@@ -111,7 +114,7 @@ public class SetLocationPick extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), SetLocationCenter.class);
                 intent.putExtra("sche_id", sche_id);
-                startActivity(intent);
+                startActivityForResult(intent, 4);
             }
         });
 
@@ -206,8 +209,8 @@ public class SetLocationPick extends AppCompatActivity {
         });
 
         // webview url load. php 파일 주소
-        webView.loadUrl("http://192.168.123.105:8080/server/locationPickWebView.jsp");
-        // webView.loadUrl("http://192.168.0.7:8080/project_Server/locationPickWebView.jsp"); //규영
+        //webView.loadUrl("http://192.168.123.105:8080/server/locationPickWebView.jsp");
+        webView.loadUrl("http://192.168.0.7:8080/project_Server/locationPickWebView.jsp"); //규영
         //webView.loadUrl("http://192.168.200.138:8080/server/locationPickWebView.jsp"); // 수연
     }
 
@@ -217,12 +220,6 @@ public class SetLocationPick extends AppCompatActivity {
             handler.post(new Runnable() {
                 @Override
                 public void run() {
-                    //Toast.makeText(getApplicationContext(),"통신 성공", Toast.LENGTH_SHORT).show();
-                    doubleLat = Double.parseDouble(latitude);
-                    doubleLng = Double.parseDouble(longitude);
-                    name = placename;
-                    Toast.makeText(getApplicationContext(),
-                            doubleLat + ", " + doubleLng + "," + name,  Toast.LENGTH_SHORT).show();
                 }
             });
         }
@@ -236,41 +233,26 @@ public class SetLocationPick extends AppCompatActivity {
             if (resultCode != Activity.RESULT_OK) {
                 return;
             }
-            String address = data.getExtras().getString("pickAddress");
+            location = data.getExtras().getString("pickAddress");
             lat = data.getExtras().getString("lat");
             lng = data.getExtras().getString("lng");
             System.out.println(lat+"pick");
             System.out.println(lng+"pick");
             doubleLat = Double.parseDouble(lat);
             doubleLng = Double.parseDouble(lng);
-            locationString.setText(address);
+            locationString.setText(location);
+        }
+        if (requestCode == 4) {
+            String location2 = data.getStringExtra("Location");
+            Intent intent = new Intent();
+            intent.putExtra("Location", location2);
+            Log.i("location" ,"pick" + location2);
+            setResult(4,intent);
+            finish();
         }
     }
-    public void OnClickHandler (View view)
-    {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("장소 선택").setMessage("이 곳으로 하시겠습니까?");
 
-        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
 
-            }
-        });
-
-        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Intent intent = new Intent(getApplicationContext(), ScheduleMainHome.class);
-                intent.putExtra("mapPointx", doubleLat);
-                intent.putExtra("mapPointy", doubleLng);
-                startActivity(intent);
-            }
-        });
-
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
-    }
 }
 
 
