@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.friend.databinding.ActivityScheduleMainHomeBinding;
 
+import java.net.URISyntaxException;
 import java.util.concurrent.ExecutionException;
 
 public class ScheduleMainHome extends AppCompatActivity {
@@ -23,6 +24,7 @@ public class ScheduleMainHome extends AppCompatActivity {
     private String inform;
     private String participants, person;
     private String[] schedule;
+    private String[] position;
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -149,9 +151,29 @@ public class ScheduleMainHome extends AppCompatActivity {
         activityScheduleMainHomeBinding.informBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), InformLocation.class);
-                intent.putExtra("sche_id",schedule_id);
-                startActivity(intent);
+                try {
+                    String result = new CustomTask().execute(schedule_id,"loadPosition").get();
+                    Log.i("result",result);
+                    position = result.split("\t");
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                String url = "kakaomap://search?q=맛집&p="+position[0]+","+position[1];
+//        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+//        startActivity(intent);
+
+                Intent intent = null;
+                try {
+                    intent = Intent.parseUri(url, Intent.URI_INTENT_SCHEME);
+                } catch (URISyntaxException e) {
+                    e.printStackTrace();
+                }
+                Intent existPackage = getPackageManager().getLaunchIntentForPackage(intent.getPackage());
+                if (existPackage != null)
+                    startActivity(intent);
             }
         });
 

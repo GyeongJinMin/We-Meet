@@ -65,9 +65,9 @@ public class CalcLocation_map extends AppCompatActivity {
                 view.loadUrl(script);
             }
         });
-        mWebView.loadUrl("http://192.168.0.7:8080/project_Server/kakaomap_rec.jsp"); //규영
+        //mWebView.loadUrl("http://172.30.1.29:8080/project_Server/kakaomap_rec.jsp");
         //mWebView.loadUrl("http://172.30.1.29:8080/server/kakaomap_rec.jsp");
-        //mWebView.loadUrl("http://192.168.0.4:8080/server/kakaomap_rec.jsp"); // 수연
+        mWebView.loadUrl("http://172.30.1.7:8080/server/kakaomap_rec.jsp"); //수연
 
     }
 

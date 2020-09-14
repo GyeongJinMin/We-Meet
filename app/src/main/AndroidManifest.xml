@@ -64,12 +64,6 @@
             android:theme="@android:style/Theme.Holo.Dialog"
             tools:ignore="Instantiatable" />
         <activity
-            android:name=".InformLocationMap"
-            tools:ignore="Instantiatable" />
-        <activity
-            android:name=".InformLocation"
-            tools:ignore="Instantiatable" />
-        <activity
             android:name=".CalcLocation"
             tools:ignore="Instantiatable" />
         <activity
