@@ -3,6 +3,7 @@ package com.example.friend;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebSettings;
@@ -29,13 +30,7 @@ public class SetLocationCenter extends AppCompatActivity {
     private String location;
     private String sche_id;
 
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode==2)
-            location = data.getStringExtra("Location");
-
-    }
 
 
     @Override
@@ -53,15 +48,15 @@ public class SetLocationCenter extends AppCompatActivity {
         activitySetLocationCenterBinding.calcBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent returnMain = new Intent();
+                //Intent returnMain = new Intent();
                 Intent intent = new Intent(getApplicationContext(), CalcLocation.class);
                 intent.putExtra("mapPointx", mapPointx);
                 intent.putExtra("mapPointy", mapPointy);
                 intent.putExtra("sche_id",sche_id);
                 intent.putExtra("location",location);
-                startActivityForResult(intent,0);
-                returnMain.putExtra("Location",location);
-                setResult(2, returnMain);
+
+                //returnMain.putExtra("Location",location);
+                //setResult(2, returnMain);
 
 
                 try {
@@ -79,11 +74,12 @@ public class SetLocationCenter extends AppCompatActivity {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+                startActivityForResult(intent,9);
 
 
 
                 //startActivity(intent);
-                finish();
+                //finish();
             }
         });
 
@@ -105,9 +101,9 @@ public class SetLocationCenter extends AppCompatActivity {
         mWebSettings.setJavaScriptEnabled(true);
         mWebView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
         mWebView.addJavascriptInterface(new AndroidBridge(), "sendMessage");
-        //mWebView.loadUrl("http://192.168.0.7:8080/project_Server/kakaomap.jsp");
+        mWebView.loadUrl("http://172.30.1.45:8080/project_Server/kakaomap.jsp");
         //mWebView.loadUrl("http://172.30.1.29:8080/server/kakaomap.jsp");
-        mWebView.loadUrl("http://172.30.1.7:8080/server/kakaomap.jsp"); // 수연
+        //mWebView.loadUrl("http://172.30.1.7:8080/server/kakaomap.jsp"); // 수연
     }
 
     public class AndroidBridge {
@@ -124,6 +120,21 @@ public class SetLocationCenter extends AppCompatActivity {
                             mapPointx + ", " + mapPointy + "," + location,  Toast.LENGTH_SHORT).show();
                 }
             });
+        }
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode ==9 && resultCode == RESULT_OK) {
+            location = data.getStringExtra("Location");
+
+            Intent intent2 = new Intent();
+            intent2.putExtra("Location", location);
+            Log.i("location" ,"center" + location);
+            setResult(2,intent2);
+            finish();
         }
     }
 }
