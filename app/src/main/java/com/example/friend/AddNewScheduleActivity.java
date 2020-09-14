@@ -19,8 +19,6 @@ import java.util.ArrayList;
 
 public class AddNewScheduleActivity extends Fragment {
     private ActivityAddNewScheduleBinding activityAddNewScheduleBinding;
-    //private RecyclerView member_list;
-    private MemberAdapter memberAdapter;
 
     @Nullable
     @Override
@@ -39,21 +37,6 @@ public class AddNewScheduleActivity extends Fragment {
         return activityAddNewScheduleBinding.getRoot();
     }
 
-
-    /*private void member_init(){
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-        activityAddNewScheduleBinding.memberView.setLayoutManager(layoutManager);
-
-        ArrayList<Person> member = new ArrayList<>();
-        member.add(new Person("이수연"));
-        member.add(new Person("이규영"));
-        member.add(new Person("민경진"));
-        member.add(new Person("최지호"));
-
-        memberAdapter = new MemberAdapter(getContext(), member, onClickItem);
-        activityAddNewScheduleBinding.memberView.setAdapter(memberAdapter);
-
-    }*/
 
     private View.OnClickListener onClickItem = new View.OnClickListener() {
         @Override

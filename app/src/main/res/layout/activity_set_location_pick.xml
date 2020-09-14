@@ -4,6 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_centerInParent="false"
+    android:layout_centerHorizontal="false"
+    android:layout_centerVertical="false"
+    android:focusableInTouchMode="true"
     android:orientation="vertical"
     android:weightSum="10">
 
@@ -17,15 +21,25 @@
             android:id="@+id/pick_location_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
             android:layout_weight="1"
-            android:text="지정위치" />
+            android:background="#3858CD"
+            android:text="지정위치"
+            android:textColor="#FFFFFF" />
 
         <Button
             android:id="@+id/center_location_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
             android:layout_weight="1"
-            android:text="중간지점" />
+            android:background="#3858CD"
+            android:text="중간지점"
+            android:textColor="#FFFFFF" />
 
     </LinearLayout>
 
@@ -39,9 +53,9 @@
             android:id="@+id/search_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="49dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/search_button"
             android:text="검색"
-
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -52,6 +66,7 @@
             android:layout_marginTop="364dp"
             android:layout_marginEnd="37dp"
             android:layout_marginBottom="32dp"
+            android:background="@drawable/search_button"
             android:text="선택"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -62,12 +77,16 @@
             android:id="@+id/locationText"
             android:layout_width="0dp"
             android:layout_height="40dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="49dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/search_textview"
+            android:paddingLeft="10dp"
+            android:gravity="center|left"
             android:hint="위치"
             android:text="위치"
             android:textAllCaps="false"
-            android:textSize="15sp"
+            android:textSize="20sp"
             app:layout_constraintEnd_toStartOf="@+id/search_btn"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -75,8 +94,12 @@
         <WebView
             android:id="@+id/locationWebView"
             android:layout_width="0dp"
-            android:layout_height="356dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
             android:layout_weight="4"
+            android:background="#4289FB"
+            app:layout_constraintBottom_toTopOf="@+id/recomendText"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/search_btn" />
@@ -85,20 +108,23 @@
             android:id="@+id/recomendText"
             android:layout_width="160dp"
             android:layout_height="28dp"
+            android:layout_marginBottom="20dp"
             android:text="주변 추천 장소 알아보기"
+            android:textColor="#3858CD"
+            android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/recomendFood"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.1"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/locationWebView"
-            app:layout_constraintVertical_bias="0.65999997" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <Button
             android:id="@+id/recomendFood"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="15dp"
+            android:background="@drawable/button_background"
             android:text="맛집"
+            android:textColor="#ffffff"
             app:layout_constraintBottom_toTopOf="@+id/select_btn"
             app:layout_constraintEnd_toStartOf="@+id/recomendCafe"
             app:layout_constraintHorizontal_bias="0.5"
@@ -108,8 +134,10 @@
             android:id="@+id/recomendCafe"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="15dp"
+            android:background="@drawable/button_background"
             android:text="카페"
+            android:textColor="#ffffff"
             app:layout_constraintBottom_toTopOf="@+id/select_btn"
             app:layout_constraintEnd_toStartOf="@+id/recomendPlace"
             app:layout_constraintHorizontal_bias="0.5"
@@ -119,8 +147,10 @@
             android:id="@+id/recomendPlace"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
+            android:layout_marginBottom="15dp"
+            android:background="@drawable/button_background"
             android:text="관광명소"
+            android:textColor="#ffffff"
             app:layout_constraintBottom_toTopOf="@+id/select_btn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"

@@ -85,6 +85,7 @@ public class ScheduleMainActivity extends Fragment {
         }
 
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(activityScheduleMainBinding.scheduleList.getContext(), linearLayoutManager.getOrientation());
+        //dividerItemDecoration.setDrawable(getResources().getDrawable(R.drawable.divider,null));
         activityScheduleMainBinding.scheduleList.addItemDecoration(dividerItemDecoration);
 
         activityScheduleMainBinding.scheduleList.addOnItemTouchListener(new RecyclerTouchListener(getContext(), activityScheduleMainBinding.scheduleList, new ClickListener() {

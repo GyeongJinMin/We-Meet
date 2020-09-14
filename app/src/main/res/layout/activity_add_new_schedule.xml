@@ -7,7 +7,7 @@
     tools:context=".AddNewScheduleActivity"
     android:orientation="vertical"
     android:weightSum="4"
-    android:background="#CEF6F5">
+    android:background="#ffffff">
 
 
     <EditText
@@ -18,28 +18,37 @@
         android:layout_marginTop="49dp"
         android:ems="10"
         android:hint="스케줄명"
+        android:textColorHint="#D6E8FF"
+        android:textSize="20sp"
+        android:textColor="#3858CD"
         android:inputType="text"
+        android:backgroundTint="#3858CD"
+        android:textCursorDrawable="@drawable/cursor"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginStart="16dp"/>
 
     <Button
         android:id="@+id/add_person_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="87dp"
+        android:layout_height="35dp"
         android:layout_marginTop="100dp"
         android:layout_marginEnd="28dp"
+        android:background="@drawable/button_1"
         android:text="참가자 추가"
+        android:textColor="#ffffff"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edit_schedule_name" />
 
     <Button
         android:id="@+id/finish_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="61dp"
+        android:layout_height="36dp"
         android:layout_marginTop="320dp"
         android:layout_marginEnd="28dp"
+        android:background="@drawable/button_2"
         android:text="완료"
+        android:textColor="#ffffff"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

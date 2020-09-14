@@ -21,21 +21,24 @@
         android:layout_margin="5dp"
         android:layout_weight="1"
         android:hint="이름"
-        android:textSize="18dp" />
-
+        android:textSize="24dp" />
     <Button
         android:id="@+id/btnNo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:text="거절" />
+        android:background="@drawable/btn_light_blue"
+        android:text="거절"
+        android:textColor="#FFFFFF" />
 
     <Button
         android:id="@+id/btnYes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:text="수락" />
+        android:background="@drawable/btn_light_blue"
+        android:text="수락"
+        android:textColor="#FFFFFF" />
 
 
 </LinearLayout>

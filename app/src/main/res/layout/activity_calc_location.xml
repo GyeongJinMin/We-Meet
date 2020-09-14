@@ -17,15 +17,25 @@
             android:id="@+id/pick_location_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
             android:layout_weight="1"
-            android:text="지정위치" />
+            android:background="#3858CD"
+            android:text="지정위치"
+            android:textColor="#FFFFFF" />
 
         <Button
             android:id="@+id/center_location_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
             android:layout_weight="1"
-            android:text="중간지점" />
+            android:background="#3858CD"
+            android:text="중간지점"
+            android:textColor="#FFFFFF" />
 
     </LinearLayout>
 
@@ -35,16 +45,17 @@
         android:layout_weight="9">
 
 
-
         <Button
             android:id="@+id/select_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="364dp"
-            android:layout_marginEnd="40dp"
+            android:layout_marginEnd="37dp"
             android:layout_marginBottom="32dp"
-            android:text="선택"
+            android:background="@drawable/search_button"
             android:onClick="OnClickHandler"
+            android:text="선택"
+            android:textColor="#FFFFFF"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/search_btn"
@@ -56,7 +67,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="40dp"
             android:layout_marginTop="52dp"
+            android:background="#FFFFFF"
             android:text="추천 장소"
+            android:textColor="#3F53BF"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -67,6 +80,7 @@
             android:layout_marginStart="40dp"
             android:layout_marginTop="28dp"
             android:text="지하철명"
+            android:textColor="#2E47A3"
             android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
@@ -79,6 +93,7 @@
             android:layout_marginStart="40dp"
             android:layout_marginTop="152dp"
             android:text="주변 추천 장소 알아보기"
+            android:textColor="#3F53BF"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/location_textview" />
 
@@ -88,7 +103,10 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="40dp"
             android:layout_marginTop="30dp"
+
             android:text="맛집"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/button_background"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView" />
 
@@ -98,6 +116,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
             android:layout_marginTop="30dp"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/button_background"
             android:text="카페"
             app:layout_constraintStart_toEndOf="@+id/btn_rest"
             app:layout_constraintTop_toBottomOf="@+id/textView" />
@@ -108,6 +128,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
             android:layout_marginTop="30dp"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/button_background"
             android:text="관광명소"
             app:layout_constraintStart_toEndOf="@+id/btn_cafe"
             app:layout_constraintTop_toBottomOf="@+id/textView" />

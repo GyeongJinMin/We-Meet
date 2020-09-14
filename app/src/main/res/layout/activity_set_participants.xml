@@ -27,8 +27,9 @@
             android:layout_gravity="center_vertical"
             android:layout_margin="5dp"
             android:layout_weight="1"
-            android:text="참여자 초대"
-            android:textSize="20dp" />
+            android:text="참가자 초대"
+            android:textSize="30dp"
+            android:textColor="#3858CD"/>
 
         <TextView
             android:id="@+id/ok"
@@ -37,6 +38,8 @@
             android:layout_gravity="center_vertical"
             android:layout_margin="5dp"
             android:onClick="mOnClick"
+            android:background="#4289FB"
+            android:textColor="#FFFFFF"
             android:text="확인"
             android:textSize="20dp" />
 
@@ -54,6 +57,7 @@
             android:layout_margin="5dp"
             android:layout_weight="1"
             android:hint="검색"
+            android:textColorHint="#4289FB"
             android:inputType="textPersonName" />
 
         <ImageView
