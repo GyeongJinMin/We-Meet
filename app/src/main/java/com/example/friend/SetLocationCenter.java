@@ -32,7 +32,7 @@ public class SetLocationCenter extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode==0)
+        if (requestCode==2)
             location = data.getStringExtra("Location");
 
     }
@@ -105,7 +105,7 @@ public class SetLocationCenter extends AppCompatActivity {
         mWebSettings.setJavaScriptEnabled(true);
         mWebView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
         mWebView.addJavascriptInterface(new AndroidBridge(), "sendMessage");
-        mWebView.loadUrl("http://192.168.0.7:8080/project_Server/kakaomap.jsp");
+        //mWebView.loadUrl("http://192.168.0.7:8080/project_Server/kakaomap.jsp");
         //mWebView.loadUrl("http://172.30.1.29:8080/server/kakaomap.jsp");
         mWebView.loadUrl("http://172.30.1.7:8080/server/kakaomap.jsp"); // 수연
     }
