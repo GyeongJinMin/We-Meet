@@ -20,6 +20,8 @@ public class SetLocationAddress extends AppCompatActivity {
     private WebSettings webSettings;
     private Button okButton;
     private String pickAddress;
+    private String lat;
+    private String lng;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +42,8 @@ public class SetLocationAddress extends AppCompatActivity {
                 pickAddress = result.getText().toString();
                 System.out.println(pickAddress);
                 intentback.putExtra("pickAddress", pickAddress);
+                intentback.putExtra("lat", lat);
+                intentback.putExtra("lng", lng);
                 setResult(RESULT_OK,intentback); //결과를 저장
                 finish();
             }
@@ -60,19 +64,22 @@ public class SetLocationAddress extends AppCompatActivity {
         webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
         webView.addJavascriptInterface(new SetLocationAddress.AndroidBridge(), "TestApp");
 
-        webView.loadUrl("http://172.30.1.7:8080/server/address.jsp");
+        webView.loadUrl("http://192.168.200.138:8080/server/address.jsp");
 
     }
 
 
     private class AndroidBridge {
         @JavascriptInterface
-        public void setAddress(final String arg1) {
+        public void setAddress(final String arg1, final String arg2, final String arg3) {
             handler.post(new Runnable() {
                 @Override
                 public void run() {
                     result.setText(String.format("%s", arg1));
-
+                    lat = String.format("%s", arg2);
+                    lng = String.format("%s", arg3);
+                    System.out.print(lat);
+                    System.out.println(lng);
                     // WebView를 초기화 하지않으면 재사용할 수 없음
                     init_webView();
                 }
