@@ -1,8 +1,10 @@
 package com.example.friend;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -101,7 +103,11 @@ public class CalcLocation extends AppCompatActivity {
                     saveDB = new CustomTask(sendMsg).execute(sche_id, Double.toString(mapPointx), Double.toString(mapPointy), location, sendMsg).get();
 //                    Intent intent = new Intent(getApplicationContext(), ScheduleMainHome.class);
 //                    startActivity(intent);
-                    setResult(2, new Intent());
+                    Intent intent = new Intent();
+                    intent.putExtra("Location",location);
+                    Log.i("location" ,"calc" + location);
+                    setResult(Activity.RESULT_OK, intent);
+
                     finish();
                 } catch (Exception e) { }
             }

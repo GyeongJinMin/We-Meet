@@ -31,6 +31,12 @@ public class ScheduleMainHome extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         //Log.i("request", Integer.toString(requestCode));
+        if (requestCode == 8) {
+            location = data.getStringExtra("Location");
+            Log.i("location","home"+location);
+
+
+        }
 
         if (resultCode != RESULT_CANCELED) {
 
@@ -137,7 +143,7 @@ public class ScheduleMainHome extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), SetLocationPick.class);
                 intent.putExtra("sche_id", schedule_id);
-                startActivityForResult(intent, 2);
+                startActivityForResult(intent, 8);
             }
         });
 

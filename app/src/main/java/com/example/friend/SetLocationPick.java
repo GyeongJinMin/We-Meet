@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
@@ -101,7 +102,8 @@ public class SetLocationPick extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), SetLocationCenter.class);
                 intent.putExtra("sche_id", sche_id);
-                startActivity(intent);
+                startActivityForResult(intent, 4);
+                //finish();
             }
         });
 
@@ -168,8 +170,8 @@ public class SetLocationPick extends AppCompatActivity {
 
         // webview url load. php 파일 주소
         //webView.loadUrl("http://172.30.1.18:8080/server/locationPickWebView.jsp");
-       // webView.loadUrl("http://192.168.0.7:8080/project_Server/locationPickWebView.jsp"); //규영
-        webView.loadUrl("http://172.30.1.7:8080/server/locationPickWebView.jsp"); // 수연
+        webView.loadUrl("http://172.30.1.45:8080/project_Server/locationPickWebView.jsp"); //규영
+        //webView.loadUrl("http://172.30.1.7:8080/server/locationPickWebView.jsp"); // 수연
     }
 
 
@@ -198,6 +200,14 @@ public class SetLocationPick extends AppCompatActivity {
             }
             String address = data.getExtras().getString("pickAddress");
             locationString.setText(address);
+        }
+        if (requestCode == 4) {
+            String location2 = data.getStringExtra("Location");
+            Intent intent = new Intent();
+            intent.putExtra("Location", location2);
+            Log.i("location" ,"pick" + location2);
+            setResult(4,intent);
+            finish();
         }
     }
 }
