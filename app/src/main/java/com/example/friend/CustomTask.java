@@ -22,6 +22,7 @@ class CustomTask extends AsyncTask<String, Void, String> {
         this.sendMsg = sendMsg;
     }
 
+
     @Override
     protected String doInBackground(String... strings) {
         try {
