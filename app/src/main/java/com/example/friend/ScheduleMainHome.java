@@ -33,6 +33,7 @@ public class ScheduleMainHome extends AppCompatActivity {
         //Log.i("request", Integer.toString(requestCode));
 
         if (resultCode != RESULT_CANCELED) {
+
             if (requestCode == 1) {
                 date = data.getStringExtra("Date");
             }

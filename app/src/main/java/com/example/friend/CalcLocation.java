@@ -99,8 +99,10 @@ public class CalcLocation extends AppCompatActivity {
                 try {
                     sendMsg ="savePoint";
                     saveDB = new CustomTask(sendMsg).execute(sche_id, Double.toString(mapPointx), Double.toString(mapPointy), location, sendMsg).get();
-                    Intent intent = new Intent(getApplicationContext(), ScheduleMainHome.class);
-                    startActivity(intent);
+//                    Intent intent = new Intent(getApplicationContext(), ScheduleMainHome.class);
+//                    startActivity(intent);
+                    setResult(2, new Intent());
+                    finish();
                 } catch (Exception e) { }
             }
         });

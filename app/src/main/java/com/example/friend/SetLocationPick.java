@@ -168,7 +168,7 @@ public class SetLocationPick extends AppCompatActivity {
 
         // webview url load. php 파일 주소
         //webView.loadUrl("http://172.30.1.18:8080/server/locationPickWebView.jsp");
-        //webView.loadUrl("http://172.30.1.29:8080/project_Server/locationPickWebView.jsp");
+       // webView.loadUrl("http://192.168.0.7:8080/project_Server/locationPickWebView.jsp"); //규영
         webView.loadUrl("http://172.30.1.7:8080/server/locationPickWebView.jsp"); // 수연
     }
 
