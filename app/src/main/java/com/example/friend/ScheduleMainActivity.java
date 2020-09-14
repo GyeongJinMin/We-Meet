@@ -41,6 +41,7 @@ public class ScheduleMainActivity extends Fragment {
     private String id;
     private String sche_id;
     private String participants;
+    private String sendMsg;
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -133,7 +134,8 @@ public class ScheduleMainActivity extends Fragment {
                         startActivityForResult(intent, 3);
 
                         try {
-                            String result = new CustomTask().execute(sche_id, "loadParticipants").get();
+                            sendMsg = "loadParticipants";
+                            String result = new CustomTask(sendMsg).execute(sche_id, "loadParticipants").get();
                             if(!result.equals("null")) {
                                 text_participants_name.setText(result);
                             }
