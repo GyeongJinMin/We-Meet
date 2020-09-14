@@ -22,6 +22,7 @@
         android:layout_margin="5dp"
         android:inputType="textPersonName"
         android:hint="검색"
+        android:textColorHint="#3858CD"
         app:layout_constraintEnd_toStartOf="@+id/imgClear"
         app:layout_constraintStart_toEndOf="@+id/imgBack"
         app:layout_constraintTop_toTopOf="parent" />

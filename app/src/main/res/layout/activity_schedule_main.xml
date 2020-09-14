@@ -12,7 +12,10 @@
         android:id="@+id/vote_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="투표" />
+        android:text="투표"
+        android:background="@drawable/button_3"
+        android:textColor="#000000"
+        android:textSize="24sp"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -35,7 +38,10 @@
             android:layout_alignParentBottom="true"
             android:layout_marginEnd="0dp"
             android:layout_marginBottom="0dp"
-            android:text="+" />
+            android:text="+"
+            android:textSize="24dp"
+            android:textColor="#ffffff"
+            android:background="@drawable/round_button"/>
     </RelativeLayout>
 
     <LinearLayout

@@ -8,13 +8,19 @@
 
     <EditText
         android:id="@+id/edit_editname"
-        android:layout_width="294dp"
+        android:layout_width="match_parent"
         android:layout_height="46dp"
+        android:layout_marginStart="40dp"
         android:layout_marginTop="124dp"
+        android:layout_marginEnd="40dp"
+        android:background="#D6E8FF"
         android:ems="10"
         android:hint="일정 이름"
         android:inputType="textPersonName"
+        android:paddingStart="20dp"
         android:text="일정 이름"
+        android:textColor="#000000"
+        android:textColorHint="#80000000"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
@@ -22,13 +28,19 @@
 
     <EditText
         android:id="@+id/edit_editmemo"
-        android:layout_width="297dp"
+        android:layout_width="match_parent"
         android:layout_height="252dp"
+        android:layout_marginStart="40dp"
         android:layout_marginTop="60dp"
+        android:layout_marginEnd="40dp"
+        android:background="#D6E8FF"
         android:ems="10"
         android:hint="메모"
         android:inputType="textPersonName"
+        android:paddingStart="20dp"
         android:text="메모"
+        android:textColor="#000000"
+        android:textColorHint="#80000000"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edit_editname" />
@@ -40,6 +52,8 @@
         android:layout_marginEnd="40dp"
         android:layout_marginBottom="40dp"
         android:text="수정"
+        android:textColor="#FFFFFF"
+        android:background="#4289FB"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
