@@ -32,6 +32,7 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.Schedu
 
     private ArrayList<Schedule> schedule_list;
     private Context context;
+    private String sendMsg;
 
     private String participants;
 
@@ -84,7 +85,8 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.Schedu
                         final String finalSche_id = sche_id;
 
                         try {
-                            String result = new CustomTask().execute(finalSche_id, "loadParticipants").get();
+                            sendMsg = "loadParticipants";
+                            String result = new CustomTask(sendMsg).execute(finalSche_id, "loadParticipants").get();
                             if(!result.equals("null")) {
                                 text_participants_name.setText(result);
                             }
