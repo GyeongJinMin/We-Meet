@@ -8,12 +8,13 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
@@ -32,6 +33,14 @@ public class SetLocationPick extends AppCompatActivity {
     private TextView locationString;
     private Handler handler;
     private WebView webView;
+    private String lat;
+    private String lng;
+    private double doubleLat;
+    private double doubleLng;
+    private String name;
+    private Button foodButton;
+    private Button cafeButton;
+    private Button placeButton;
 //    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
 //        super.onActivityResult(requestCode, resultCode, data);
 //
@@ -102,8 +111,7 @@ public class SetLocationPick extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), SetLocationCenter.class);
                 intent.putExtra("sche_id", sche_id);
-                startActivityForResult(intent, 4);
-                //finish();
+                startActivity(intent);
             }
         });
 
@@ -115,7 +123,36 @@ public class SetLocationPick extends AppCompatActivity {
             }
         });
 
-
+        activitySetLocationPickBinding.recomendFood.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), CalcLocation_map.class);
+                intent.putExtra("category", "맛집");
+                intent.putExtra("mapPointx", doubleLat);
+                intent.putExtra("mapPointy", doubleLng);
+                startActivity(intent);
+            }
+        });
+        activitySetLocationPickBinding.recomendCafe.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), CalcLocation_map.class);
+                intent.putExtra("category", "카페");
+                intent.putExtra("mapPointx", doubleLat);
+                intent.putExtra("mapPointy", doubleLng);
+                startActivity(intent);
+            }
+        });
+        activitySetLocationPickBinding.recomendPlace.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), CalcLocation_map.class);
+                intent.putExtra("category", "관광명소");
+                intent.putExtra("mapPointx", doubleLat);
+                intent.putExtra("mapPointy", doubleLng);
+                startActivity(intent);
+            }
+        });
 
         activitySetLocationPickBinding.locationText.addTextChangedListener(new TextWatcher() {
 
@@ -170,21 +207,22 @@ public class SetLocationPick extends AppCompatActivity {
 
         // webview url load. php 파일 주소
         //webView.loadUrl("http://172.30.1.18:8080/server/locationPickWebView.jsp");
-        webView.loadUrl("http://172.30.1.45:8080/project_Server/locationPickWebView.jsp"); //규영
-        //webView.loadUrl("http://172.30.1.7:8080/server/locationPickWebView.jsp"); // 수연
+        // webView.loadUrl("http://192.168.0.7:8080/project_Server/locationPickWebView.jsp"); //규영
+        webView.loadUrl("http://192.168.200.138:8080/server/locationPickWebView.jsp"); // 수연
     }
 
-
-    private class AndroidBridge {
+    public class AndroidBridge {
         @JavascriptInterface
-        public void setAddress(final String arg1, final String arg2, final String arg3) {
+        public void sendPoint(final String latitude, final String longitude, final String placename) {
             handler.post(new Runnable() {
                 @Override
                 public void run() {
-                    locationString.setText(String.format("(%s) %s %s", arg1, arg2, arg3));
-
-                    // WebView를 초기화 하지않으면 재사용할 수 없음
-                    init_webView();
+                    //Toast.makeText(getApplicationContext(),"통신 성공", Toast.LENGTH_SHORT).show();
+                    doubleLat = Double.parseDouble(latitude);
+                    doubleLng = Double.parseDouble(longitude);
+                    name = placename;
+                    Toast.makeText(getApplicationContext(),
+                            doubleLat + ", " + doubleLng + "," + name,  Toast.LENGTH_SHORT).show();
                 }
             });
         }
@@ -199,16 +237,39 @@ public class SetLocationPick extends AppCompatActivity {
                 return;
             }
             String address = data.getExtras().getString("pickAddress");
+            lat = data.getExtras().getString("lat");
+            lng = data.getExtras().getString("lng");
+            System.out.println(lat+"pick");
+            System.out.println(lng+"pick");
+            doubleLat = Double.parseDouble(lat);
+            doubleLng = Double.parseDouble(lng);
             locationString.setText(address);
         }
-        if (requestCode == 4) {
-            String location2 = data.getStringExtra("Location");
-            Intent intent = new Intent();
-            intent.putExtra("Location", location2);
-            Log.i("location" ,"pick" + location2);
-            setResult(4,intent);
-            finish();
-        }
+    }
+    public void OnClickHandler (View view)
+    {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("장소 선택").setMessage("이 곳으로 하시겠습니까?");
+
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent intent = new Intent(getApplicationContext(), ScheduleMainHome.class);
+                intent.putExtra("mapPointx", doubleLat);
+                intent.putExtra("mapPointy", doubleLng);
+                startActivity(intent);
+            }
+        });
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 }
 

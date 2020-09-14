@@ -50,13 +50,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="364dp"
-            android:layout_marginEnd="40dp"
+            android:layout_marginEnd="37dp"
             android:layout_marginBottom="32dp"
             android:text="선택"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/search_btn"
             app:layout_constraintVertical_bias="1.0" />
+
         <TextView
             android:id="@+id/locationText"
             android:layout_width="0dp"
@@ -73,13 +74,57 @@
 
         <WebView
             android:id="@+id/locationWebView"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_width="0dp"
+            android:layout_height="356dp"
             android:layout_weight="4"
-            app:layout_constraintBottom_toTopOf="@+id/select_btn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/search_btn" />
+
+        <TextView
+            android:id="@+id/recomendText"
+            android:layout_width="160dp"
+            android:layout_height="28dp"
+            android:text="주변 추천 장소 알아보기"
+            app:layout_constraintBottom_toTopOf="@+id/recomendFood"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/locationWebView"
+            app:layout_constraintVertical_bias="0.65999997" />
+
+        <Button
+            android:id="@+id/recomendFood"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:text="맛집"
+            app:layout_constraintBottom_toTopOf="@+id/select_btn"
+            app:layout_constraintEnd_toStartOf="@+id/recomendCafe"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/recomendCafe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:text="카페"
+            app:layout_constraintBottom_toTopOf="@+id/select_btn"
+            app:layout_constraintEnd_toStartOf="@+id/recomendPlace"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/recomendFood" />
+
+        <Button
+            android:id="@+id/recomendPlace"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="관광명소"
+            app:layout_constraintBottom_toTopOf="@+id/select_btn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/recomendCafe" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </LinearLayout>
