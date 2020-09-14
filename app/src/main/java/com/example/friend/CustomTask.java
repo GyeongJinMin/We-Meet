@@ -53,6 +53,10 @@ class CustomTask extends AsyncTask<String, Void, String> {
             else if (sendMsg.equals("join") ) {
                 sendMsg = "id="+strings[0]+"&pwd="+strings[1]+"&name="+strings[2]+"&type="+strings[3]+"&latitude="+strings[4]+"&longitude="+strings[5];
             }
+            else if (sendMsg.equals("savePoint")) {
+                //sche_id, mapPointx, mapPointy, placename, sendMsg
+                sendMsg = "sche_id="+strings[0]+"&latitude="+strings[1]+"&longitude="+strings[2]+"&location="+strings[3]+"&type=" + strings[4];
+            }
             else if(strings.length==1){ //load All Schedule
                 sendMsg = "type="+strings[0];
             }
