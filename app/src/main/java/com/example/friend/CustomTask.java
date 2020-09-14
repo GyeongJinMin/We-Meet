@@ -28,8 +28,8 @@ class CustomTask extends AsyncTask<String, Void, String> {
         try {
             String str;
             //URL url = new URL("http://172.30.1.7:8080/server/DBserver.jsp"); //수연
-            URL url = new URL("http://172.30.1.45:8080/project_Server/DB.jsp"); //규영
-            //URL url = new URL("http://172.30.1.12:8080/server/DBserver.jsp");// 경진
+            //URL url = new URL("http://172.30.1.45:8080/project_Server/DB.jsp"); //규영
+            URL url = new URL("http://192.168.123.105:8080/server/DBserver.jsp");// 경진
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
             conn.setRequestMethod("POST");

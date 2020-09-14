@@ -64,7 +64,7 @@ public class AddressWebview extends AppCompatActivity {
 
         //mWebView.loadUrl("http://172.30.1.18:8080/server/address.jsp");
         //mWebView.loadUrl("http://172.30.1.29:8080/project_Server/address.jsp");
-        mWebView.loadUrl("http://192.168.200.138:8080/server/address.jsp");
+        mWebView.loadUrl("http://192.168.123.105:8080/server/address.jsp");
 
 
     }

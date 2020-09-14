@@ -74,7 +74,6 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.Schedu
 
                         final Button finish_btn = (Button) view.findViewById(R.id.finish_btn);
                         final EditText edit_schedule_name = (EditText) view.findViewById(R.id.edit_schedule_name);
-                        final TextView text_participants_name = (TextView) view.findViewById(R.id.participant);
                         final Button add_person_btn = (Button) view.findViewById(R.id.add_person_btn);
 
                         String sche_id = schedule_list.get(getAdapterPosition()).getSche_id();
@@ -87,9 +86,6 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.Schedu
                         try {
                             sendMsg = "loadParticipants";
                             String result = new CustomTask(sendMsg).execute(finalSche_id, "loadParticipants").get();
-                            if(!result.equals("null")) {
-                                text_participants_name.setText(result);
-                            }
                         } catch (ExecutionException e) {
                             e.printStackTrace();
                         } catch (InterruptedException e) {
