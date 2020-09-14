@@ -83,7 +83,12 @@ public class ParticipantsAdapter extends RecyclerView.Adapter {
                     // 체크 된 것을 checkedList에 넣어야 됨...
                     // 체크 푸는 경우
                     if(mHolder.mBinding.checkFriend.isChecked()) {
-                        temp += mProfiles.get(position).getName() + ",";
+                        if(temp.equals("")) {
+                            temp += mProfiles.get(position).getName();
+                        }
+                        else {
+                            temp += "," + mProfiles.get(position).getName();
+                        }
                     }
                 }
             });

@@ -41,7 +41,6 @@ public class ScheduleMainActivity extends Fragment {
     private String id;
     private String sche_id;
     private String participants;
-    private String sendMsg;
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -120,7 +119,6 @@ public class ScheduleMainActivity extends Fragment {
 
                 final Button finish_btn = (Button) view.findViewById(R.id.finish_btn);
                 final EditText edit_schedule_name = (EditText) view.findViewById(R.id.edit_schedule_name);
-                final TextView text_participants_name = (TextView) view.findViewById(R.id.participant);
                 final Button add_person_btn = (Button) view.findViewById(R.id.add_person_btn);
 
                 final AlertDialog dialog = builder.create();
@@ -132,18 +130,6 @@ public class ScheduleMainActivity extends Fragment {
                         intent.putExtra("sche_id", "newSchedule");
                         intent.putExtra("message", "newSchedule");
                         startActivityForResult(intent, 3);
-
-                        try {
-                            sendMsg = "loadParticipants";
-                            String result = new CustomTask(sendMsg).execute(sche_id, "loadParticipants").get();
-                            if(!result.equals("null")) {
-                                text_participants_name.setText(result);
-                            }
-                        } catch (ExecutionException e) {
-                            e.printStackTrace();
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
                     }
                 });
 

@@ -22,7 +22,7 @@ public class ScheduleMainHome extends AppCompatActivity {
     private String date;
     private String location;
     private String inform;
-    private String participants, person;
+    private String participants = "", person;
     private String[] schedule;
     private String[] position;
 
@@ -59,10 +59,12 @@ public class ScheduleMainHome extends AppCompatActivity {
                     inform = location;
             }
 
-            if(participants != null)
-                participants += person;
-            else
-                participants = person;
+            if(person != null) {
+                if(participants.equals(""))
+                    participants = person;
+                else
+                    participants += "," + person;
+            }
 
             activityScheduleMainHomeBinding.informBtn.setText(inform);
             activityScheduleMainHomeBinding.personName.setText(participants);
