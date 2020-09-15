@@ -37,8 +37,6 @@ public class CalcLocation extends AppCompatActivity {
         location = intent.getStringExtra("location");
         sche_id = intent.getStringExtra("sche_id");
 
-        Toast.makeText(getApplicationContext(),
-                mapPointx + ", " + mapPointy + "," + location,  Toast.LENGTH_SHORT).show();
 
         activityCalcLocationBinding.locationTextview.setText(location);
 
