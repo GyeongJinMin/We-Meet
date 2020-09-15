@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -84,6 +85,8 @@ public class VoteLocationAdapter extends RecyclerView.Adapter<VoteLocationAdapte
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+
+                Toast.makeText(context,"Yes",Toast.LENGTH_SHORT).show();
             }
 
 
@@ -104,6 +107,8 @@ public class VoteLocationAdapter extends RecyclerView.Adapter<VoteLocationAdapte
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+
+                Toast.makeText(context,"No",Toast.LENGTH_SHORT).show();
             }
         });
 
